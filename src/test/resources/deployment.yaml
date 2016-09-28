@@ -1,0 +1,17 @@
+deployments:
+  -
+    name: pattern1
+    deployscripts: wso2am/deploy.sh
+    repository: git@github.com:irham0019/kubernetes-artifacts.git
+    suite: pattern1
+    undeployscripts: wso2am/undeploy.sh
+    enable: true
+    filePath: data.json
+  -
+    name: pattern2
+    deployscripts: wso2am/deploy.sh
+    repository: git@github.com:irhamiqbal/kubernetes-artifacts.git
+    suite: pattern2
+    undeployscripts: wso2am/undeploy.sh
+    enable: true
+    filePath: data.json
