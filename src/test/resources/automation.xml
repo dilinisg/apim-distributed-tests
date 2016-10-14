@@ -240,7 +240,7 @@
                 <properties>
                 </properties>
             </instance>
-            <instance name="wso2am-api-store" type="standalone" nonBlockingTransportEnabled="false">
+            <instance name="store" type="standalone" nonBlockingTransportEnabled="false">
                 <hosts>
                     <host type="default">192.168.57.235</host>
                 </hosts>
@@ -251,7 +251,7 @@
                 <properties>
                 </properties>
             </instance>
-            <instance name="wso2am-api-publisher" type="standalone" nonBlockingTransportEnabled="false">
+            <instance name="publisher" type="standalone" nonBlockingTransportEnabled="false">
                 <hosts>
                     <host type="default">192.168.57.33</host>
                 </hosts>
@@ -262,7 +262,7 @@
                 <properties>
                 </properties>
             </instance>
-            <instance name="wso2am-api-key-manager" type="standalone" nonBlockingTransportEnabled="false">
+            <instance name="keymanager" type="standalone" nonBlockingTransportEnabled="false">
                 <hosts>
                     <host type="default">192.168.57.32</host>
                 </hosts>
@@ -273,7 +273,7 @@
                 <properties>
                 </properties>
             </instance>
-            <instance name="wso2am-gateway-manager" type="standalone" nonBlockingTransportEnabled="false">
+            <instance name="gateway-manager" type="standalone" nonBlockingTransportEnabled="false">
                 <hosts>
                     <host type="default">192.168.57.235</host>
                 </hosts>
@@ -286,7 +286,7 @@
                 <properties>
                 </properties>
             </instance>
-            <instance name="wso2am-gateway-worker" type="standalone" nonBlockingTransportEnabled="true">
+            <instance name="gateway-worker" type="standalone" nonBlockingTransportEnabled="true">
                 <hosts>
                     <host type="default">192.168.57.235</host>
                 </hosts>

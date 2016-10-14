@@ -23,11 +23,11 @@ public class APIMIntegrationConstants {
     //instance names
     public static final String AM_PRODUCT_GROUP_NAME = "APIM";
     public static final String AM_DEFAULT_INSTANCE = "wso2am-default";
-    public static final String AM_STORE_INSTANCE = "wso2am-api-store";
-    public static final String AM_PUBLISHER_INSTANCE = "wso2am-api-publisher";
-    public static final String AM_GATEWAY_MGT_INSTANCE = "wso2am-gateway-manager";
-    public static final String AM_GATEWAY_WRK_INSTANCE = "wso2am-gateway-worker";
-    public static final String AM_KEY_MANAGER_INSTANCE = "wso2am-api-key-manager";
+    public static final String AM_STORE_INSTANCE = "store";
+    public static final String AM_PUBLISHER_INSTANCE = "publisher";
+    public static final String AM_GATEWAY_MGT_INSTANCE = "gatewaymanager";
+    public static final String AM_GATEWAY_WRK_INSTANCE = "gatewayworker";
+    public static final String AM_KEY_MANAGER_INSTANCE = "keymanager";
     public static final String BACKEND_SERVER_INSTANCE = "backend-server";
 
     //Response element names

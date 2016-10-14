@@ -1,0 +1,9 @@
+serverinfo:
+  -
+    url: http://192.168.48.160/lib/api/xmlrpc/v1/xmlrpc.php
+    enable: true
+    devkey: 88f096829f8b3e1e93c5c902c5a1c24a
+    project: WSO2 API Manager
+    testplan: API Manager 1.9.0
+    testlinkcustomfield: AutomationTestCase
+    buildname: 1.9.0

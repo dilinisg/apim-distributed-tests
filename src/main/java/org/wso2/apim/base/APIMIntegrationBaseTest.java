@@ -30,6 +30,7 @@ import org.wso2.apim.bean.APIMURLBean;
 import org.wso2.apim.clients.APIPublisherRestClient;
 import org.wso2.apim.clients.APIStoreRestClient;
 import org.wso2.apim.exception.APIManagerIntegrationTestException;
+import org.wso2.carbon.automation.distributed.commons.DeploymentConfigurationReader;
 import org.wso2.carbon.automation.distributed.context.AutomationContext;
 import org.wso2.carbon.automation.distributed.context.TestUserMode;
 import org.wso2.carbon.automation.distributed.context.beans.User;
@@ -39,6 +40,7 @@ import org.wso2.carbon.automation.test.utils.http.client.HttpResponse;
 import org.wso2.carbon.integration.common.utils.LoginLogoutClient;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.NoSuchElementException;
 
 import javax.xml.xpath.XPathExpressionException;
@@ -57,6 +59,7 @@ public class APIMIntegrationBaseTest {
     protected TestUserMode userMode;
     protected APIMURLBean defaultUrls, storeUrls, publisherUrls, gatewayUrlsMgt, gatewayUrlsWrk, keyMangerUrl, backEndServerUrl;
     protected User user;
+    protected HashMap<String,String> instanceMap;
 
     /**
      * This method will initialize test environment
@@ -88,70 +91,54 @@ public class APIMIntegrationBaseTest {
      */
     protected void init(TestUserMode userMode) throws APIManagerIntegrationTestException {
 
+        DeploymentConfigurationReader depconf = new DeploymentConfigurationReader();
+
+        try {
+            instanceMap = depconf.getDeploymentInstanceMap("pattern1");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         try {
             //create store server instance based on configuration given at automation.xml
 
-            defaultContext =
-                    new AutomationContext(APIMIntegrationConstants.AM_PRODUCT_GROUP_NAME,
-                                          APIMIntegrationConstants.AM_DEFAULT_INSTANCE, userMode);
+           // defaultContext =
+                //    new AutomationContext(APIMIntegrationConstants.AM_PRODUCT_GROUP_NAME,instanceMap.get(APIMIntegrationConstants.AM_DEFAULT_INSTANCE), userMode);
 
-            try {
-                defaultUrls = new APIMURLBean(defaultContext.getContextUrls());
-            } catch (NoSuchElementException ex) {
-                // since default instance not available in the deployment
-            }
+//            try {
+//               // defaultUrls = new APIMURLBean(defaultContext.getContextUrls());
+//            } catch (NoSuchElementException ex) {
+//                // since default instance not available in the deployment
+//            }
 
             storeContext =
                     new AutomationContext(APIMIntegrationConstants.AM_PRODUCT_GROUP_NAME,
-                                          APIMIntegrationConstants.AM_STORE_INSTANCE, userMode);
+                                          instanceMap.get(APIMIntegrationConstants.AM_STORE_INSTANCE), userMode);
 
-            try {
                 storeUrls = new APIMURLBean(storeContext.getContextUrls());
-            } catch (NoSuchElementException ex) {
-                // since store instance not available in the deployment
-                storeUrls = defaultUrls;
-            }
             //create publisher server instance based on configuration given at automation.xml
             publisherContext =
                     new AutomationContext(APIMIntegrationConstants.AM_PRODUCT_GROUP_NAME,
-                                          APIMIntegrationConstants.AM_PUBLISHER_INSTANCE, userMode);
-            try {
+                                          instanceMap.get(APIMIntegrationConstants.AM_PUBLISHER_INSTANCE), userMode);
                 publisherUrls = new APIMURLBean(publisherContext.getContextUrls());
-            } catch (NoSuchElementException ex) {
-                // since publisher instance not available in the deployment
-                publisherUrls = defaultUrls;
-            }
 
             //create gateway server instance based on configuration given at automation.xml
 
             gatewayContextMgt =
                     new AutomationContext(APIMIntegrationConstants.AM_PRODUCT_GROUP_NAME,
-                                          APIMIntegrationConstants.AM_GATEWAY_MGT_INSTANCE, userMode);
+                                          instanceMap.get(APIMIntegrationConstants.AM_GATEWAY_MGT_INSTANCE), userMode);
 
-            try {
                 gatewayUrlsMgt = new APIMURLBean(gatewayContextMgt.getContextUrls());
-            } catch (NoSuchElementException ex) {
-                // since gateway mgt instance not available in the deployment
-                gatewayUrlsMgt = defaultUrls;
-            }
+
             gatewayContextWrk =
                     new AutomationContext(APIMIntegrationConstants.AM_PRODUCT_GROUP_NAME,
-                                          APIMIntegrationConstants.AM_GATEWAY_WRK_INSTANCE, userMode);
-            try {
+                                          instanceMap.get(APIMIntegrationConstants.AM_GATEWAY_WRK_INSTANCE), userMode);
                 gatewayUrlsWrk = new APIMURLBean(gatewayContextWrk.getContextUrls());
-            } catch (NoSuchElementException ex) {
-                // since gateway wrk instance not available in the deployment
-                gatewayUrlsWrk = defaultUrls;
-            }
+
 
             keyManagerContext = new AutomationContext(APIMIntegrationConstants.AM_PRODUCT_GROUP_NAME,
-                                                      APIMIntegrationConstants.AM_KEY_MANAGER_INSTANCE, userMode);
-            try {
+                                                      instanceMap.get(APIMIntegrationConstants.AM_KEY_MANAGER_INSTANCE), userMode);
                 keyMangerUrl = new APIMURLBean(keyManagerContext.getContextUrls());
-            } catch (NoSuchElementException ex) {
-                // since keyManager instance not available in the deployment
-                keyMangerUrl = defaultUrls;
-            }
 
             backEndServer = new AutomationContext(APIMIntegrationConstants.AM_PRODUCT_GROUP_NAME,
                                                   APIMIntegrationConstants.BACKEND_SERVER_INSTANCE, userMode);
@@ -160,6 +147,7 @@ public class APIMIntegrationBaseTest {
             } catch(NoSuchElementException ex){
                 // since backend instance not available in the deployment
                 backEndServerUrl = defaultUrls;
+                log.info("XXXXXXXXXXXXXXXXXXXx============= No Such Element Reaches BACKEND_SERVER_INSTANCE XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
             }
 
             user = storeContext.getContextTenant().getContextUser();

@@ -1,17 +1,32 @@
 deployments:
   -
     name: pattern1
+    enable: true
     deployscripts: wso2am/deploy.sh
     repository: git@github.com:irham0019/kubernetes-artifacts.git
     suite: pattern1
     undeployscripts: wso2am/undeploy.sh
-    enable: true
     filePath: data.json
+    instancemap :
+    -
+      store : wso2am-default
+      publisher : wso2am-default
+      keymanager : wso2am-default
+      gatewaymanager : wso2am-default
+      gatewaywsorker : wso2am-default
   -
     name: pattern2
+    enable: false
     deployscripts: wso2am/deploy.sh
     repository: git@github.com:irhamiqbal/kubernetes-artifacts.git
     suite: pattern2
     undeployscripts: wso2am/undeploy.sh
-    enable: true
     filePath: data.json
+    instancemap :
+    -
+      store : wso2am-store
+      publisher : wso2am-publisher
+      keymanager : wso2am-keymanager
+      gatewaymanager : wso2am-gateway-manager
+      gatewaywsorker : wso2am-gateway-worker
+

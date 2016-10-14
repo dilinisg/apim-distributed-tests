@@ -11,4 +11,10 @@
         <listener class-name="org.wso2.carbon.automation.engine.testlisteners.TestTransformerListener"/>
     </listeners>
 
+    <test name="MainTrigger">
+        <classes>
+            <class name="org.wso2.apim.deployment.TestNgExecuter"/>
+        </classes>
+    </test>
+
 </suite>
