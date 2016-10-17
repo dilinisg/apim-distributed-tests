@@ -36,11 +36,16 @@
                 <configuration>
                     <argLine>-Xms512m -Xmx1024m</argLine>
                     <!--<argLine>-Xmx1024m -XX:PermSize=256m -XX:MaxPermSize=512m -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005</argLine>-->
-                    <suiteXmlFiles>
+
+                <suiteXmlFiles>
+                    <suiteXmlFile>src/test/resources/testng-server-mgt.xml</suiteXmlFile>
+                </suiteXmlFiles>
+
+                    <!--suiteXmlFiles>
                         <suiteXmlFile>src/test/resources/testng-server-mgt.xml</suiteXmlFile>
                         <suiteXmlFile>src/test/resources/testng_pattern1.xml</suiteXmlFile>
                         <suiteXmlFile>src/test/resources/testng_pattern2.xml</suiteXmlFile>
-                    </suiteXmlFiles>
+                    </suiteXmlFiles-->
 
                     <systemProperties>
                         <property>
@@ -128,6 +133,21 @@
                        </execution>
                    </executions>
                </plugin>-->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>org.wso2.apim.Main</mainClass>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -238,6 +258,14 @@
                     <outputName>distributed-test</outputName>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
         </plugins>
 
         <resources>
@@ -310,6 +338,11 @@
             <groupId>org.wso2.carbon.registry</groupId>
             <artifactId>org.wso2.carbon.registry.resource.stub</artifactId>
             <version>${carbon.registry.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>br.eti.kinoshita</groupId>
+            <artifactId>testlink-java-api</artifactId>
+            <version>1.9.13-0</version>
         </dependency>
     </dependencies>
 
