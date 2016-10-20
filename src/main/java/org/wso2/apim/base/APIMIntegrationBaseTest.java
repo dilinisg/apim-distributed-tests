@@ -31,13 +31,14 @@ import org.wso2.apim.clients.APIPublisherRestClient;
 import org.wso2.apim.clients.APIStoreRestClient;
 import org.wso2.apim.exception.APIManagerIntegrationTestException;
 import org.wso2.carbon.automation.distributed.commons.DeploymentConfigurationReader;
-import org.wso2.carbon.automation.distributed.context.AutomationContext;
-import org.wso2.carbon.automation.distributed.context.TestUserMode;
-import org.wso2.carbon.automation.distributed.context.beans.User;
-import org.wso2.carbon.automation.distributed.frameworkutils.FrameworkPathUtil;
 import org.wso2.carbon.automation.distributed.utills.ScriptExecutorUtil;
+import org.wso2.carbon.automation.engine.context.AutomationContext;
+import org.wso2.carbon.automation.engine.context.TestUserMode;
+import org.wso2.carbon.automation.engine.context.beans.User;
+import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
 import org.wso2.carbon.automation.test.utils.http.client.HttpResponse;
 import org.wso2.carbon.integration.common.utils.LoginLogoutClient;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -60,6 +61,13 @@ public class APIMIntegrationBaseTest {
     protected APIMURLBean defaultUrls, storeUrls, publisherUrls, gatewayUrlsMgt, gatewayUrlsWrk, keyMangerUrl, backEndServerUrl;
     protected User user;
     protected HashMap<String,String> instanceMap;
+
+    protected String storeURL;
+    protected String publisherURL;
+    protected String keyManagerURL;
+    protected String gateWayManagerURL;
+    protected String gateWayWorkerURL;
+
 
     /**
      * This method will initialize test environment
@@ -92,7 +100,6 @@ public class APIMIntegrationBaseTest {
     protected void init(TestUserMode userMode) throws APIManagerIntegrationTestException {
 
         DeploymentConfigurationReader depconf = new DeploymentConfigurationReader();
-
         try {
             instanceMap = depconf.getDeploymentInstanceMap("pattern1");
         } catch (IOException e) {
@@ -100,16 +107,6 @@ public class APIMIntegrationBaseTest {
         }
 
         try {
-            //create store server instance based on configuration given at automation.xml
-
-           // defaultContext =
-                //    new AutomationContext(APIMIntegrationConstants.AM_PRODUCT_GROUP_NAME,instanceMap.get(APIMIntegrationConstants.AM_DEFAULT_INSTANCE), userMode);
-
-//            try {
-//               // defaultUrls = new APIMURLBean(defaultContext.getContextUrls());
-//            } catch (NoSuchElementException ex) {
-//                // since default instance not available in the deployment
-//            }
 
             storeContext =
                     new AutomationContext(APIMIntegrationConstants.AM_PRODUCT_GROUP_NAME,
@@ -147,7 +144,6 @@ public class APIMIntegrationBaseTest {
             } catch(NoSuchElementException ex){
                 // since backend instance not available in the deployment
                 backEndServerUrl = defaultUrls;
-                log.info("XXXXXXXXXXXXXXXXXXXx============= No Such Element Reaches BACKEND_SERVER_INSTANCE XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
             }
 
             user = storeContext.getContextTenant().getContextUser();
@@ -155,8 +151,6 @@ public class APIMIntegrationBaseTest {
         } catch (XPathExpressionException e) {
             log.error("APIM test environment initialization failed", e);
             throw new APIManagerIntegrationTestException("APIM test environment initialization failed", e);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
     }
@@ -209,8 +203,6 @@ public class APIMIntegrationBaseTest {
         } catch (XPathExpressionException e) {
             log.error("Init failed", e);
             throw new APIManagerIntegrationTestException("APIM test environment initialization failed", e);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
     }

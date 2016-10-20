@@ -17,11 +17,10 @@
 */
 package org.wso2.apim.deployment.api.creation;
 
-
-import junit.framework.Assert;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
+import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -37,7 +36,8 @@ import org.wso2.apim.bean.APPKeyRequestGenerator;
 import org.wso2.apim.bean.SubscriptionRequest;
 import org.wso2.apim.clients.APIPublisherRestClient;
 import org.wso2.apim.clients.APIStoreRestClient;
-import org.wso2.carbon.automation.distributed.context.TestUserMode;
+import org.wso2.apim.deployment.base.APIMBaseTest;
+import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.automation.test.utils.http.client.HttpRequestUtil;
 import org.wso2.carbon.automation.test.utils.http.client.HttpResponse;
 import java.net.URL;
@@ -50,7 +50,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 
-public class APICreationInvocationTestCase extends APIMIntegrationBaseTest {
+public class APICreationInvocationTestCase extends APIMBaseTest {
     private final Log log = LogFactory.getLog(APICreationInvocationTestCase.class);
     private APIPublisherRestClient apiPublisher;
     private APIStoreRestClient apiStore;
