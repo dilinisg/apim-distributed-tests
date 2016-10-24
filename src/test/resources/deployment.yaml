@@ -13,7 +13,7 @@ deployments:
       publisher : wso2am-default
       keymanager : wso2am-default
       gatewaymanager : wso2am-default
-      gatewaywsorker : wso2am-default
+      gatewayworker : wso2am-default
   -
     name: pattern2
     enable: false
@@ -24,9 +24,8 @@ deployments:
     filePath: data.json
     instancemap :
     -
-      store : wso2am-store
-      publisher : wso2am-publisher
-      keymanager : wso2am-keymanager
+      store : wso2am-api-store
+      publisher : wso2am-api-publisher
+      keymanager : wso2am-api-key-manager
       gatewaymanager : wso2am-gateway-manager
-      gatewaywsorker : wso2am-gateway-worker
-
+      gatewayworker : wso2am-gateway-manager

@@ -67,11 +67,11 @@ public class APICreationInvocationTestCase extends APIMBaseTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment(ITestContext ctx) throws Exception {
         super.init(userMode);
-        String publisherURLHttp = getPublisherURLHttp();
-        String storeURLHttp = getStoreURLHttp();
+        //String publisherURLHttp = getPublisherURLHttp();
+        //String storeURLHttp = getStoreURLHttp();
 
-        apiStore = new APIStoreRestClient(storeURLHttp);
-        apiPublisher = new APIPublisherRestClient(publisherURLHttp);
+        apiStore = new APIStoreRestClient(storeURL);
+        apiPublisher = new APIPublisherRestClient(publisherURL);
 
         apiPublisher.login(user.getUserName(), user.getPassword());
         apiStore.login(user.getUserName(), user.getPassword());
@@ -98,7 +98,7 @@ public class APICreationInvocationTestCase extends APIMBaseTest {
 
     }
 
-    @Test(groups = {"wso2.am"}, description = "Sample Application Creation", dependsOnMethods = "testAPIPublishing")
+    @Test(groups = {"wso2.am"}, description = "Sample Application Creation", dependsOnMethods = "testAPICreation")
     public void testApplicationCreation() throws Exception {
         HttpResponse serviceResponse = apiStore.addApplication(appName, APIThrottlingTier.UNLIMITED.getState(), "", "this-is-test");
         verifyResponse(serviceResponse);
@@ -117,38 +117,6 @@ public class APICreationInvocationTestCase extends APIMBaseTest {
         verifyResponse(serviceResponse);
 
     }
-
-    @Test(groups = {"wso2.am"}, description = "Application Key Generation", dependsOnMethods = "testAPISubscription")
-    public void testApplicationKeyGeneration() throws Exception {
-
-        APPKeyRequestGenerator generateAppKeyRequest =
-                new APPKeyRequestGenerator(appName);
-        String responseString = apiStore.generateApplicationKey(generateAppKeyRequest).getData();
-        log.info(responseString);
-        JSONObject response = new JSONObject(responseString);
-        String accessToken =
-                response.getJSONObject("data").getJSONObject("key").get("accessToken").toString();
-        Assert.assertNotNull("Access Token not found " + responseString, accessToken);
-
-        requestHeaders.put("Authorization", "Bearer " + accessToken);
-
-    }
-
-    @Test(groups = {"wso2.am"}, description = "Sample API creation", dependsOnMethods = "testApplicationKeyGeneration")
-    public void testAPIInvocation() throws Exception {
-        HttpResponse serviceResponse;
-        requestHeaders.put("Accept", "application/xml");
-
-        HttpResponse sampleResponse = HttpRequestUtil.doGet(
-                getAPIInvocationURLHttp(apiContext + "/1.0.0/customers/123"), requestHeaders);
-        log.info(sampleResponse.getData());
-        assertEquals(sampleResponse.getResponseCode(), Response.Status.OK.getStatusCode(),
-                     "Response code mismatched when api invocation");
-        assertTrue(sampleResponse.getData().contains("<Customer>"),
-                   "Response data mismatched when api invocation");
-
-    }
-
 
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {

@@ -39,11 +39,12 @@ public class APIMBaseTest extends APIMIntegrationBaseTest {
     public void createEnvironment(ITestContext ctx)
             throws APIManagerIntegrationTestException, IOException {
         super.setTestSuite(ctx.getCurrentXmlTest().getSuite().getName());
+        super.init(ctx.getCurrentXmlTest().getSuite().getName());
     }
 
     @BeforeClass(alwaysRun = true)
     public void init() throws APIManagerIntegrationTestException {
-      super.init();
+      //super.init();
     }
 
     @AfterSuite(alwaysRun = true)

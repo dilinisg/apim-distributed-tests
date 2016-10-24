@@ -36,7 +36,7 @@ import java.util.Map;
 public class APIPublisherRestClient {
     private static final Log log = LogFactory.getLog(APIPublisherRestClient.class);
     private String backendURL;
-    private static final String URL_SUFFIX = "publisher/site/blocks";
+    private static final String URL_SUFFIX = "/site/blocks";
     private Map<String, String> requestHeaders = new HashMap<String, String>();
 
     /**
@@ -175,7 +175,7 @@ public class APIPublisherRestClient {
         try {
             checkAuthentication();
             return HttpRequestUtil.doPost(
-                    new URL(backendURL + "publisher/site/blocks/life-cycles/ajax/life-cycles.jag"),
+                    new URL(backendURL + "/site/blocks/life-cycles/ajax/life-cycles.jag"),
                     updateRequest.generateRequestParameters(),
                     requestHeaders);
 

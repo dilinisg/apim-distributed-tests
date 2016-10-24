@@ -63,7 +63,7 @@ public class APIStoreRestClient {
         log.info("Login to Store " + backendURL + " as the user " + userName );
         try {
             response = HttpRequestUtil.doPost(
-                    new URL(backendURL + "store/site/blocks/user/login/ajax/login.jag"),
+                    new URL(backendURL + "/site/blocks/user/login/ajax/login.jag"),
                     "action=login&username=" + userName + "&password=" + password + "",
                     requestHeaders);
         } catch (Exception e) {
@@ -92,7 +92,7 @@ public class APIStoreRestClient {
         try {
             checkAuthentication();
             return HttpRequestUtil.doPost(
-                    new URL(backendURL + "store/site/blocks/subscription/subscription-add/ajax/subscription-add.jag"),
+                    new URL(backendURL + "/site/blocks/subscription/subscription-add/ajax/subscription-add.jag"),
                     subscriptionRequest.generateRequestParameters(), requestHeaders);
         } catch (Exception e) {
             throw new APIManagerIntegrationTestException("subscript to api fails", e);
@@ -115,7 +115,7 @@ public class APIStoreRestClient {
             generateAppKeyRequest.setAppId(appId);
 
             return HttpRequestUtil.doPost(
-                    new URL(backendURL + "store/site/blocks/subscription/subscription-add/ajax/subscription-add.jag"),
+                    new URL(backendURL + "/site/blocks/subscription/subscription-add/ajax/subscription-add.jag"),
                     generateAppKeyRequest.generateRequestParameters(), requestHeaders);
 
         } catch (Exception e) {
@@ -400,7 +400,7 @@ public class APIStoreRestClient {
             checkAuthentication();
             return HttpRequestUtil.doPost(
                     new URL(backendURL +
-                            "store/site/blocks/application/application-add" +
+                            "/site/blocks/application/application-add" +
                             "/ajax/application-add.jag?action=addApplication&tier=" +
                             tier + "&callbackUrl=" + callbackUrl + "&description=" + description +
                             "&application=" + application), "", requestHeaders);

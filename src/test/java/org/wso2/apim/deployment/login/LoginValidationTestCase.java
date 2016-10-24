@@ -63,7 +63,7 @@ public class LoginValidationTestCase extends APIMIntegrationBaseTest {
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
-        super.init(userMode);
+        //super.init(userMode);
         publisherURLHttp = getPublisherURLHttp();
         storeURLHttp = getStoreURLHttp();
 

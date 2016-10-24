@@ -77,7 +77,6 @@ public class TestNgExecuter {
             testng.setTestSuites(suites);
             testng.setOutputDirectory("apim-intergration-tests"); //TODO remove hardcoding
             testng.run();
-
         }
 
     }

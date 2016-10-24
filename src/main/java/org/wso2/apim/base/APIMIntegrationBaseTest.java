@@ -18,6 +18,7 @@
 
 package org.wso2.apim.base;
 
+import io.fabric8.utils.Ports;
 import org.apache.axiom.om.OMElement;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.logging.Log;
@@ -30,7 +31,10 @@ import org.wso2.apim.bean.APIMURLBean;
 import org.wso2.apim.clients.APIPublisherRestClient;
 import org.wso2.apim.clients.APIStoreRestClient;
 import org.wso2.apim.exception.APIManagerIntegrationTestException;
+import org.wso2.carbon.automation.distributed.beans.InstanceUrls;
+import org.wso2.carbon.automation.distributed.beans.Port;
 import org.wso2.carbon.automation.distributed.commons.DeploymentConfigurationReader;
+import org.wso2.carbon.automation.distributed.commons.DeploymentDataReader;
 import org.wso2.carbon.automation.distributed.utills.ScriptExecutorUtil;
 import org.wso2.carbon.automation.engine.context.AutomationContext;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
@@ -42,6 +46,7 @@ import org.wso2.carbon.integration.common.utils.LoginLogoutClient;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import javax.xml.xpath.XPathExpressionException;
@@ -75,11 +80,55 @@ public class APIMIntegrationBaseTest {
      *
      * @throws APIManagerIntegrationTestException - if test configuration init fails
      */
-    protected void init() throws APIManagerIntegrationTestException {
+    protected void init(String pattern) throws APIManagerIntegrationTestException {
         userMode = TestUserMode.SUPER_TENANT_ADMIN;
-        init(userMode);
+        setURLs(pattern);
     }
 
+    protected void setURLs(String pattern){
+
+        HashMap<String,String> instanceMap2 = null;
+        DeploymentConfigurationReader depconf = new DeploymentConfigurationReader();
+        try {
+            instanceMap2 = depconf.getDeploymentInstanceMap(pattern);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        DeploymentDataReader dataJsonReader = new DeploymentDataReader();
+        List<InstanceUrls> urlList = dataJsonReader.getInstanceUrlsList();
+        for (InstanceUrls amt : urlList){
+            if (instanceMap2 != null) {
+                if (amt.getLable().equals(instanceMap2.get(APIMIntegrationConstants.AM_STORE_INSTANCE))) {
+                    storeURL=getHTTPSUrl("servlet-http",amt.getHostIP(),amt.getPorts(),"/store");
+                }
+                if (amt.getLable().equals(instanceMap2.get(APIMIntegrationConstants.AM_PUBLISHER_INSTANCE))) {
+                    publisherURL=getHTTPSUrl("servlet-http",amt.getHostIP(),amt.getPorts(),"/publisher");
+                }
+                if (amt.getLable().equals(instanceMap2.get(APIMIntegrationConstants.AM_KEY_MANAGER_INSTANCE))) {
+                    keyManagerURL=getHTTPSUrl("servlet-http",amt.getHostIP(),amt.getPorts(),"");
+                }
+                if (amt.getLable().equals(instanceMap2.get(APIMIntegrationConstants.AM_GATEWAY_MGT_INSTANCE))) {
+                    gateWayManagerURL=getHTTPSUrl("servlet-http",amt.getHostIP(),amt.getPorts(),"");
+                }
+                if (amt.getLable().equals(instanceMap2.get(APIMIntegrationConstants.AM_GATEWAY_WRK_INSTANCE))) {
+                    gateWayWorkerURL=getHTTPSUrl("pass-through-http",amt.getHostIP(),amt.getPorts(),"");
+                }
+            }
+        }
+    }
+
+    protected String getHTTPSUrl(String protocol, String hostIP, List<Port> ports, String context){
+
+        String Url = "http://"+hostIP+":";
+        for (Port port : ports) {
+            if (port.getProtocol().equals(protocol)){
+                Url = Url + port.getPort() + context;
+                break;
+            }
+        }
+        return Url;
+    }
 
     protected void setTestSuite(String testSuite) throws IOException {
         ScriptExecutorUtil.deployScenario(testSuite);
@@ -208,32 +257,6 @@ public class APIMIntegrationBaseTest {
     }
 
     /**
-     * @param relativeFilePath - file path to load config
-     * @throws APIManagerIntegrationTestException - Throws if load synapse configuration from file path
-     *                                            fails
-     */
-    protected void loadSynapseConfigurationFromClasspath(String relativeFilePath,
-                                                         AutomationContext automationContext,
-                                                         String sessionCookie)
-            throws APIManagerIntegrationTestException {
-
-//        relativeFilePath = relativeFilePath.replaceAll("[\\\\/]", Matcher.quoteReplacement(File.separator));
-//        OMElement synapseConfig;
-//
-//        try {
-//            synapseConfig = APIMTestCaseUtils.loadResource(relativeFilePath);
-//            updateSynapseConfiguration(synapseConfig, automationContext, sessionCookie);
-//
-//        } catch (FileNotFoundException e) {
-//            log.error("synapse config loading issue", e);
-//            throw new APIManagerIntegrationTestException("synapse config loading issue", e);
-//        } catch (XMLStreamException e) {
-//            log.error("synapse config loading issue", e);
-//            throw new APIManagerIntegrationTestException("synapse config loading issue", e);
-//        }
-    }
-
-    /**
      * @param automationContext - automation context instance of given server
      * @return - created session cookie variable
      * @throws APIManagerIntegrationTestException - Throws if creating session cookie fails
@@ -257,40 +280,6 @@ public class APIMIntegrationBaseTest {
      */
     protected String getAMResourceLocation() {
         return FrameworkPathUtil.getSystemResourceLocation() + "artifacts" + File.separator + "AM";
-    }
-
-    /**
-     * update synapse config to server
-     *
-     * @param synapseConfig     - config to upload
-     * @param automationContext - automation context of the server instance
-     * @param sessionCookie     -  logged in session cookie
-     * @throws APIManagerIntegrationTestException - If synapse config update fails
-     */
-    protected void updateSynapseConfiguration(OMElement synapseConfig,
-                                              AutomationContext automationContext,
-                                              String sessionCookie)
-            throws APIManagerIntegrationTestException {
-
-//        if (synapseConfiguration == null) {
-//            synapseConfiguration = synapseConfig;
-//        } else {
-//            Iterator<OMElement> itr = synapseConfig.cloneOMElement().getChildElements();  //ToDo
-//            while (itr.hasNext()) {
-//                synapseConfiguration.addChild(itr.next());
-//            }
-//        }
-//
-//        try {
-//
-//            APIMTestCaseUtils.updateSynapseConfiguration(synapseConfig,
-//                                                         automationContext.getContextUrls().getBackEndUrl(),
-//                                                         sessionCookie);
-//
-//        } catch (Exception e) {
-//            log.error("synapse config  upload error", e);
-//            throw new APIManagerIntegrationTestException("synapse config  upload error", e);
-//        }
     }
 
     protected String getStoreURLHttp() {
