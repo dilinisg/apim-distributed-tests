@@ -44,7 +44,7 @@ public class TestNgExecuter {
 
             for (Deployment deployment : deploymentList) {
                 // The Test Link platform should be same as the deployment pattern name
-                tlsite = tlbuilder.getTestLinkSite(testLinkBean.getUrl(),testLinkBean.getDevkey(),testLinkBean.getProjectName(),testLinkBean.getTestPlan(),deployment.getName(),testLinkBean.getBuild(),null);
+                tlsite = tlbuilder.getTestLinkSite(testLinkBean.getUrl(),testLinkBean.getDevkey(),testLinkBean.getProjectName(),testLinkBean.getTestPlan(),deployment.getName());
                 log.info("Retrieving Automation Test from TestLink. Project : " + testLinkBean.getProjectName() + " Test Plan : " +testLinkBean.getTestPlan() + " Platform : " +deployment.getName());
                 tcList = tlsite.getTestCaseClassList(new String[]{testLinkBean.getTestLinkCustomField()});
 
@@ -68,12 +68,13 @@ public class TestNgExecuter {
                 TestNG tng = new TestNG();
                 tng.setXmlSuites(suites);
                 log.info("Running Test Suite " +deployment.getName());
+                tng.setOutputDirectory("apim-intergration-tests"); //TODO remove hardcoding
                 tng.run();
             }
         } else {
             TestNG testng = new TestNG();
             List<String> suites = new ArrayList<>();
-            suites.add("../src/test/resources/testng_pattern1.xml"); // TODO The path shouldn't be hardcoded.
+            suites.add("../src/test/resources/testng.xml"); // TODO The path shouldn't be hardcoded.
             testng.setTestSuites(suites);
             testng.setOutputDirectory("apim-intergration-tests"); //TODO remove hardcoding
             testng.run();

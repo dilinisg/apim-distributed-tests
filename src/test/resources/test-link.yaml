@@ -6,4 +6,3 @@ serverinfo:
     project: WSO2 API Manager
     testplan: API Manager 1.9.0
     testlinkcustomfield: AutomationTestCase
-    buildname: 1.9.0

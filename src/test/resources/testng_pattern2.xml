@@ -31,7 +31,7 @@
         <!--<class name="org.wso2.apim.deployment.lifecycle.ChangeAPITagsTestCase"/>-->
         <!--<class name="org.wso2.apim.deployment.lifecycle.ChangeAPITierAndTestInvokingTestCase"/>-->
         <!--<class name="org.wso2.apim.deployment.lifecycle.AccessibilityOfBlockAPITestCase"/>-->
-        <class name="org.wso2.apim.deployment.lifecycle.AccessibilityOfDeprecatedOldAPIAndPublishedCopyAPITestCase"/>
+        <class name="org.wso2.apim.deployment.api.creation.APICreationInvocationTestCase"/>
         </classes>
     </test>
 </suite>

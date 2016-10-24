@@ -94,6 +94,7 @@ public class APICreationInvocationTestCase extends APIMBaseTest {
                 new APILifeCycleStateRequest(apiName, user.getUserName(),
                                              APILifeCycleState.PUBLISHED);
         HttpResponse serviceResponse = apiPublisher.changeAPILifeCycleStatus(updateRequest);
+        Thread.sleep(10000);
         verifyResponse(serviceResponse);
 
     }
