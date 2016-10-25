@@ -88,8 +88,8 @@ public class APIMIntegrationBaseTest {
     protected void setURLs(String pattern){
 
         HashMap<String,String> instanceMap2 = null;
-        DeploymentConfigurationReader depconf = new DeploymentConfigurationReader();
         try {
+            DeploymentConfigurationReader depconf = DeploymentConfigurationReader.readConfiguration();
             instanceMap2 = depconf.getDeploymentInstanceMap(pattern);
         } catch (IOException e) {
             e.printStackTrace();
@@ -148,8 +148,8 @@ public class APIMIntegrationBaseTest {
      */
     protected void init(TestUserMode userMode) throws APIManagerIntegrationTestException {
 
-        DeploymentConfigurationReader depconf = new DeploymentConfigurationReader();
         try {
+            DeploymentConfigurationReader depconf = DeploymentConfigurationReader.readConfiguration();
             instanceMap = depconf.getDeploymentInstanceMap("pattern1");
         } catch (IOException e) {
             e.printStackTrace();

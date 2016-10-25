@@ -29,7 +29,7 @@ public class TestNgExecuter {
     public void executeEnvironment() throws IOException
     {
 
-        TestLink testLinkBean = new DeploymentConfigurationReader().getTestLinkConfigurations();
+        TestLink testLinkBean =  DeploymentConfigurationReader.readConfiguration().getTestLinkConfigurations();
         List<Deployment> deploymentList;
 
         if (testLinkBean.isEnabled()){
@@ -38,7 +38,7 @@ public class TestNgExecuter {
             log.info("Connecting to TestLink : " +testLinkBean.getUrl());
             TestLinkSiteUtil tlsite = null;
 
-            HashMap<String, Deployment> deploymentHashMap = new DeploymentConfigurationReader().getDeploymentHashMap();
+            HashMap<String, Deployment> deploymentHashMap =  DeploymentConfigurationReader.readConfiguration().getDeploymentHashMap();
             deploymentList = new ArrayList<>(deploymentHashMap.values());
             ArrayList tcList = null;
 
