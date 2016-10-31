@@ -2,9 +2,11 @@ package org.wso2.apim.deployment;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.testng.TestListenerAdapter;
 import org.testng.TestNG;
 import org.testng.TestNGException;
 import org.testng.annotations.BeforeSuite;
+import org.testng.xml.SuiteGenerator;
 import org.testng.xml.XmlClass;
 import org.testng.xml.XmlSuite;
 import org.testng.xml.XmlTest;
@@ -42,6 +44,9 @@ public class TestNgExecuter {
             deploymentList = new ArrayList<>(deploymentHashMap.values());
             ArrayList tcList = null;
 
+            TestNG tng = new TestNG();
+            List<XmlSuite> suites = new ArrayList<>();
+
             for (Deployment deployment : deploymentList) {
                 // The Test Link platform should be same as the deployment pattern name
                 tlsite = tlbuilder.getTestLinkSite(testLinkBean.getUrl(),testLinkBean.getDevkey(),testLinkBean.getProjectName(),testLinkBean.getTestPlan(),deployment.getName());
@@ -49,6 +54,7 @@ public class TestNgExecuter {
                 tcList = tlsite.getTestCaseClassList(new String[]{testLinkBean.getTestLinkCustomField()});
 
                 XmlSuite suite = new XmlSuite();
+//                SuiteGenerator.createSuite()
                 suite.setName(deployment.getName());
                 XmlTest test = new XmlTest(suite);
                 test.setName("AutomationTests");
@@ -61,16 +67,16 @@ public class TestNgExecuter {
                         log.error("Error occurred while adding the class : " +e.toString());
                     }
                 }
-
                 test.setXmlClasses(classes) ;
-                List<XmlSuite> suites = new ArrayList<>();
                 suites.add(suite);
-                TestNG tng = new TestNG();
-                tng.setXmlSuites(suites);
-                log.info("Running Test Suite " +deployment.getName());
-                tng.setOutputDirectory("apim-intergration-tests"); //TODO remove hardcoding
-                tng.run();
             }
+            tng.setXmlSuites(suites);
+            tng.setPreserveOrder(true);
+            log.info("Running Test Suites.........");
+            TestListenerAdapter tl = new TestListenerAdapter();
+            tng.addListener(tl);
+            tng.setOutputDirectory("apim-intergration-tests"); //TODO remove hardcoding
+            tng.run();
         } else {
             TestNG testng = new TestNG();
             List<String> suites = new ArrayList<>();

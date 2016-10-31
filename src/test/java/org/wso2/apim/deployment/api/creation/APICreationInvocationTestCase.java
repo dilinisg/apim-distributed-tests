@@ -19,35 +19,25 @@ package org.wso2.apim.deployment.api.creation;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.json.JSONObject;
-import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Factory;
 import org.testng.annotations.Test;
-import org.wso2.apim.base.APIMIntegrationBaseTest;
 import org.wso2.apim.bean.APILifeCycleState;
 import org.wso2.apim.bean.APILifeCycleStateRequest;
 import org.wso2.apim.bean.APIRequest;
 import org.wso2.apim.bean.APIThrottlingTier;
-import org.wso2.apim.bean.APPKeyRequestGenerator;
 import org.wso2.apim.bean.SubscriptionRequest;
 import org.wso2.apim.clients.APIPublisherRestClient;
 import org.wso2.apim.clients.APIStoreRestClient;
 import org.wso2.apim.deployment.base.APIMBaseTest;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
-import org.wso2.carbon.automation.test.utils.http.client.HttpRequestUtil;
 import org.wso2.carbon.automation.test.utils.http.client.HttpResponse;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.ws.rs.core.Response;
-
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 
 
 public class APICreationInvocationTestCase extends APIMBaseTest {
@@ -121,8 +111,8 @@ public class APICreationInvocationTestCase extends APIMBaseTest {
 
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
-        apiStore.removeApplication(appName);
-        super.cleanUp();
+//        apiStore.removeApplication(appName);
+//        super.cleanUp();
     }
 
     @DataProvider

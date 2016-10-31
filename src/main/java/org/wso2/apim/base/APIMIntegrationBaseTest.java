@@ -18,7 +18,6 @@
 
 package org.wso2.apim.base;
 
-import io.fabric8.utils.Ports;
 import org.apache.axiom.om.OMElement;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.logging.Log;
@@ -359,7 +358,7 @@ public class APIMIntegrationBaseTest {
 
         APIStoreRestClient apiStore = new APIStoreRestClient(getStoreURLHttp());
         apiStore.login(user.getUserName(), user.getPassword());
-        APIPublisherRestClient publisherRestClient = new APIPublisherRestClient(getPublisherURLHttp());
+        APIPublisherRestClient publisherRestClient = new APIPublisherRestClient(publisherURL);
         publisherRestClient.login(user.getUserName(), user.getPassword());
         HttpResponse subscriptionDataResponse = apiStore.getAllSubscriptions();
         verifyResponse(subscriptionDataResponse);

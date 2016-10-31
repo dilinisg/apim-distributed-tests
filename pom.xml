@@ -286,11 +286,6 @@
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon.automation</groupId>
-            <artifactId>distributed-automation-framework</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.wso2.carbon.automation</groupId>
             <artifactId>org.wso2.carbon.automation.engine</artifactId>
             <version>5.0.0-SNAPSHOT</version>
         </dependency>
