@@ -6,7 +6,6 @@ import org.testng.TestListenerAdapter;
 import org.testng.TestNG;
 import org.testng.TestNGException;
 import org.testng.annotations.BeforeSuite;
-import org.testng.xml.SuiteGenerator;
 import org.testng.xml.XmlClass;
 import org.testng.xml.XmlSuite;
 import org.testng.xml.XmlTest;
@@ -38,11 +37,11 @@ public class TestNgExecuter {
 
             TestLinkBuilder tlbuilder = new TestLinkBuilder();
             log.info("Connecting to TestLink : " +testLinkBean.getUrl());
-            TestLinkSiteUtil tlsite = null;
+            TestLinkSiteUtil tlsite;
 
             HashMap<String, Deployment> deploymentHashMap =  DeploymentConfigurationReader.readConfiguration().getDeploymentHashMap();
             deploymentList = new ArrayList<>(deploymentHashMap.values());
-            ArrayList tcList = null;
+            ArrayList tcList;
 
             TestNG tng = new TestNG();
             List<XmlSuite> suites = new ArrayList<>();
@@ -78,6 +77,7 @@ public class TestNgExecuter {
             tng.setOutputDirectory("apim-intergration-tests"); //TODO remove hardcoding
             tng.run();
         } else {
+            log.info("Retrieve Tests from Test-Link is Disabled, Hence Retrieving Tests from default testng.xml");
             TestNG testng = new TestNG();
             List<String> suites = new ArrayList<>();
             suites.add("../src/test/resources/testng.xml"); // TODO The path shouldn't be hardcoded.
