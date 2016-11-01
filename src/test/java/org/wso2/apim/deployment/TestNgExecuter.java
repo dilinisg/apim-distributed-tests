@@ -53,7 +53,6 @@ public class TestNgExecuter {
                 tcList = tlsite.getTestCaseClassList(new String[]{testLinkBean.getTestLinkCustomField()});
 
                 XmlSuite suite = new XmlSuite();
-//                SuiteGenerator.createSuite()
                 suite.setName(deployment.getName());
                 XmlTest test = new XmlTest(suite);
                 test.setName("AutomationTests");
