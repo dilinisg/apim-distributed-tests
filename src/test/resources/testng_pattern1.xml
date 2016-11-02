@@ -1,4 +1,3 @@
-
 <!--
   ~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
   ~
@@ -25,14 +24,8 @@
     <test name="lifecycle-pattern1" preserve-order="true" parallel="false">
 
         <classes>
-        <class name="org.wso2.apim.deployment.api.creation.APICreationInvocationTestCase"/>
-        <!--<class name="org.wso2.apim.deployment.lifecycle.AccessibilityOfRetireAPITestCase"/>-->
-        <!--<class name="org.wso2.apim.deployment.lifecycle.AddEditRemoveRESTResourceTestCase"/>-->
-        <!--<class name="org.wso2.apim.deployment.lifecycle.AddNewMediationAndInvokeAPITestCase"/>-->
-        <!--<class name="org.wso2.apim.deployment.lifecycle.APIAccessibilityOfPublishedOldAPIAndPublishedCopyAPITestCase"/>-->
-        <!--<class name="org.wso2.apim.deployment.lifecycle.ChangeAPITagsTestCase"/>-->
-        <!--<class name="org.wso2.apim.deployment.lifecycle.AccessibilityOfBlockAPITestCase"/>-->
-        <!--<class name="org.wso2.apim.deployment.lifecycle.AccessibilityOfDeprecatedOldAPIAndPublishedCopyAPITestCase"/>-->
+        <!--<class name="org.wso2.apim.deployment.api.creation.APICreationInvocationTestCase"/>-->
+        <class name="org.wso2.apim.deployment.api.creation.ApplicationCreationTestCase"/>
         </classes>
     </test>
 

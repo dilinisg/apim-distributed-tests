@@ -24,14 +24,8 @@
     <test name="lifecycle-pattern2" preserve-order="true" parallel="false">
 
         <classes>
-        <!--<class name="org.wso2.apim.deployment.lifecycle.AccessibilityOfOldAPIAndCopyAPIWithReSubscriptionTestCase"/>-->
-        <!--<class name="org.wso2.apim.deployment.lifecycle.AccessibilityOfRetireAPITestCase"/>-->
-        <!--<class name="org.wso2.apim.deployment.lifecycle.AddEditRemoveRESTResourceTestCase"/>-->
-        <!--<class name="org.wso2.apim.deployment.lifecycle.AddNewMediationAndInvokeAPITestCase"/>-->
-        <!--<class name="org.wso2.apim.deployment.lifecycle.ChangeAPITagsTestCase"/>-->
-        <!--<class name="org.wso2.apim.deployment.lifecycle.ChangeAPITierAndTestInvokingTestCase"/>-->
-        <!--<class name="org.wso2.apim.deployment.lifecycle.AccessibilityOfBlockAPITestCase"/>-->
-        <class name="org.wso2.apim.deployment.api.creation.APICreationInvocationTestCase"/>
+            <class name="org.wso2.apim.deployment.api.creation.APICreationInvocationTestCase"/>
+            <!--<class name="org.wso2.apim.deployment.api.creation.ApplicationCreationTestCase"/>-->
         </classes>
     </test>
 </suite>
