@@ -34,8 +34,8 @@ public class ApplicationCreationTestCase extends APIMBaseTest {
         apiStore = new APIStoreRestClient(storeURL);
         apiPublisher = new APIPublisherRestClient(publisherURL);
 
-        apiPublisher.login(user.getUserName(), user.getPassword());
-        apiStore.login(user.getUserName(), user.getPassword());
+        apiPublisher.login("admin", "admin");
+        apiStore.login("admin", "admin");
 
     }
 

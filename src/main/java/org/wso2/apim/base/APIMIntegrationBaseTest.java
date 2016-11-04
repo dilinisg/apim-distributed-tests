@@ -16,9 +16,8 @@
 *under the License.
 */
 
-package org.wso2.apim.base;
+package org.wso2.apim.base; //org.wso2.carbon.automation.distributed
 
-import org.apache.axiom.om.OMElement;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -60,7 +59,6 @@ public class APIMIntegrationBaseTest {
     private static final Log log = LogFactory.getLog(APIMIntegrationBaseTest.class);
     protected AutomationContext defaultContext, storeContext, publisherContext, keyManagerContext, gatewayContextMgt,
             gatewayContextWrk, backEndServer;
-    protected OMElement synapseConfiguration;
     protected TestUserMode userMode;
     protected APIMURLBean defaultUrls, storeUrls, publisherUrls, gatewayUrlsMgt, gatewayUrlsWrk, keyMangerUrl, backEndServerUrl;
     protected User user;
@@ -84,34 +82,34 @@ public class APIMIntegrationBaseTest {
         setURLs(pattern);
     }
 
-    protected void setURLs(String pattern){
+    protected void setURLs(String patternName){
 
-        HashMap<String,String> instanceMap2 = null;
+        HashMap<String,String> instanceMap = null;
         try {
             DeploymentConfigurationReader depconf = DeploymentConfigurationReader.readConfiguration();
-            instanceMap2 = depconf.getDeploymentInstanceMap(pattern);
+            instanceMap = depconf.getDeploymentInstanceMap(patternName);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         DeploymentDataReader dataJsonReader = new DeploymentDataReader();
         List<InstanceUrls> urlList = dataJsonReader.getInstanceUrlsList();
-        for (InstanceUrls amt : urlList){
-            if (instanceMap2 != null) {
-                if (amt.getLable().equals(instanceMap2.get(APIMIntegrationConstants.AM_STORE_INSTANCE))) {
-                    storeURL=getHTTPSUrl("servlet-http",amt.getHostIP(),amt.getPorts(),"/store");
+        for (InstanceUrls url : urlList){
+            if (instanceMap != null) {
+                if (url.getLable().equals(instanceMap.get(APIMIntegrationConstants.AM_STORE_INSTANCE))) {
+                    storeURL=getHTTPSUrl("servlet-http",url.getHostIP(),url.getPorts(),"/store");
                 }
-                if (amt.getLable().equals(instanceMap2.get(APIMIntegrationConstants.AM_PUBLISHER_INSTANCE))) {
-                    publisherURL=getHTTPSUrl("servlet-http",amt.getHostIP(),amt.getPorts(),"/publisher");
+                if (url.getLable().equals(instanceMap.get(APIMIntegrationConstants.AM_PUBLISHER_INSTANCE))) {
+                    publisherURL=getHTTPSUrl("servlet-http",url.getHostIP(),url.getPorts(),"/publisher");
                 }
-                if (amt.getLable().equals(instanceMap2.get(APIMIntegrationConstants.AM_KEY_MANAGER_INSTANCE))) {
-                    keyManagerURL=getHTTPSUrl("servlet-http",amt.getHostIP(),amt.getPorts(),"");
+                if (url.getLable().equals(instanceMap.get(APIMIntegrationConstants.AM_KEY_MANAGER_INSTANCE))) {
+                    keyManagerURL=getHTTPSUrl("servlet-http",url.getHostIP(),url.getPorts(),"");
                 }
-                if (amt.getLable().equals(instanceMap2.get(APIMIntegrationConstants.AM_GATEWAY_MGT_INSTANCE))) {
-                    gateWayManagerURL=getHTTPSUrl("servlet-http",amt.getHostIP(),amt.getPorts(),"");
+                if (url.getLable().equals(instanceMap.get(APIMIntegrationConstants.AM_GATEWAY_MGT_INSTANCE))) {
+                    gateWayManagerURL=getHTTPSUrl("servlet-http",url.getHostIP(),url.getPorts(),"");
                 }
-                if (amt.getLable().equals(instanceMap2.get(APIMIntegrationConstants.AM_GATEWAY_WRK_INSTANCE))) {
-                    gateWayWorkerURL=getHTTPSUrl("pass-through-http",amt.getHostIP(),amt.getPorts(),"");
+                if (url.getLable().equals(instanceMap.get(APIMIntegrationConstants.AM_GATEWAY_WRK_INSTANCE))) {
+                    gateWayWorkerURL=getHTTPSUrl("pass-through-http",url.getHostIP(),url.getPorts(),"");
                 }
             }
         }
@@ -146,60 +144,60 @@ public class APIMIntegrationBaseTest {
      * @throws APIManagerIntegrationTestException - if test configuration init fails
      */
     protected void init(TestUserMode userMode) throws APIManagerIntegrationTestException {
+//
+//        try {
+//            //DeploymentConfigurationReader depconf = DeploymentConfigurationReader.readConfiguration();
+//            // = depconf.getDeploymentInstanceMap("pattern1");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
-        try {
-            DeploymentConfigurationReader depconf = DeploymentConfigurationReader.readConfiguration();
-            instanceMap = depconf.getDeploymentInstanceMap("pattern1");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-
-            storeContext =
-                    new AutomationContext(APIMIntegrationConstants.AM_PRODUCT_GROUP_NAME,
-                                          instanceMap.get(APIMIntegrationConstants.AM_STORE_INSTANCE), userMode);
-
-                storeUrls = new APIMURLBean(storeContext.getContextUrls());
-            //create publisher server instance based on configuration given at automation.xml
-            publisherContext =
-                    new AutomationContext(APIMIntegrationConstants.AM_PRODUCT_GROUP_NAME,
-                                          instanceMap.get(APIMIntegrationConstants.AM_PUBLISHER_INSTANCE), userMode);
-                publisherUrls = new APIMURLBean(publisherContext.getContextUrls());
-
-            //create gateway server instance based on configuration given at automation.xml
-
-            gatewayContextMgt =
-                    new AutomationContext(APIMIntegrationConstants.AM_PRODUCT_GROUP_NAME,
-                                          instanceMap.get(APIMIntegrationConstants.AM_GATEWAY_MGT_INSTANCE), userMode);
-
-                gatewayUrlsMgt = new APIMURLBean(gatewayContextMgt.getContextUrls());
-
-            gatewayContextWrk =
-                    new AutomationContext(APIMIntegrationConstants.AM_PRODUCT_GROUP_NAME,
-                                          instanceMap.get(APIMIntegrationConstants.AM_GATEWAY_WRK_INSTANCE), userMode);
-                gatewayUrlsWrk = new APIMURLBean(gatewayContextWrk.getContextUrls());
-
-
-            keyManagerContext = new AutomationContext(APIMIntegrationConstants.AM_PRODUCT_GROUP_NAME,
-                                                      instanceMap.get(APIMIntegrationConstants.AM_KEY_MANAGER_INSTANCE), userMode);
-                keyMangerUrl = new APIMURLBean(keyManagerContext.getContextUrls());
-
-            backEndServer = new AutomationContext(APIMIntegrationConstants.AM_PRODUCT_GROUP_NAME,
-                                                  APIMIntegrationConstants.BACKEND_SERVER_INSTANCE, userMode);
-            try {
-                backEndServerUrl = new APIMURLBean(backEndServer.getContextUrls());
-            } catch(NoSuchElementException ex){
-                // since backend instance not available in the deployment
-                backEndServerUrl = defaultUrls;
-            }
-
-            user = storeContext.getContextTenant().getContextUser();
-
-        } catch (XPathExpressionException e) {
-            log.error("APIM test environment initialization failed", e);
-            throw new APIManagerIntegrationTestException("APIM test environment initialization failed", e);
-        }
+//        try {
+//
+//            storeContext =
+//                    new AutomationContext(APIMIntegrationConstants.AM_PRODUCT_GROUP_NAME,
+//                                          instanceMap.get(APIMIntegrationConstants.AM_STORE_INSTANCE), userMode);
+//
+//                storeUrls = new APIMURLBean(storeContext.getContextUrls());
+//            //create publisher server instance based on configuration given at automation.xml
+//            publisherContext =
+//                    new AutomationContext(APIMIntegrationConstants.AM_PRODUCT_GROUP_NAME,
+//                                          instanceMap.get(APIMIntegrationConstants.AM_PUBLISHER_INSTANCE), userMode);
+//                publisherUrls = new APIMURLBean(publisherContext.getContextUrls());
+//
+//            //create gateway server instance based on configuration given at automation.xml
+//
+//            gatewayContextMgt =
+//                    new AutomationContext(APIMIntegrationConstants.AM_PRODUCT_GROUP_NAME,
+//                                          instanceMap.get(APIMIntegrationConstants.AM_GATEWAY_MGT_INSTANCE), userMode);
+//
+//                gatewayUrlsMgt = new APIMURLBean(gatewayContextMgt.getContextUrls());
+//
+//            gatewayContextWrk =
+//                    new AutomationContext(APIMIntegrationConstants.AM_PRODUCT_GROUP_NAME,
+//                                          instanceMap.get(APIMIntegrationConstants.AM_GATEWAY_WRK_INSTANCE), userMode);
+//                gatewayUrlsWrk = new APIMURLBean(gatewayContextWrk.getContextUrls());
+//
+//
+//            keyManagerContext = new AutomationContext(APIMIntegrationConstants.AM_PRODUCT_GROUP_NAME,
+//                                                      instanceMap.get(APIMIntegrationConstants.AM_KEY_MANAGER_INSTANCE), userMode);
+//                keyMangerUrl = new APIMURLBean(keyManagerContext.getContextUrls());
+//
+//            backEndServer = new AutomationContext(APIMIntegrationConstants.AM_PRODUCT_GROUP_NAME,
+//                                                  APIMIntegrationConstants.BACKEND_SERVER_INSTANCE, userMode);
+//            try {
+//                backEndServerUrl = new APIMURLBean(backEndServer.getContextUrls());
+//            } catch(NoSuchElementException ex){
+//                // since backend instance not available in the deployment
+//                backEndServerUrl = defaultUrls;
+//            }
+//
+//            user = storeContext.getContextTenant().getContextUser();
+//
+//        } catch (XPathExpressionException e) {
+//            log.error("APIM test environment initialization failed", e);
+//            throw new APIManagerIntegrationTestException("APIM test environment initialization failed", e);
+//        }
 
     }
 

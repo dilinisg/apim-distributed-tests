@@ -25,6 +25,7 @@ import java.util.List;
  */
 public class TestNgExecuter {
     private static final Log log = LogFactory.getLog(TestNgExecuter.class);
+    private boolean tcListEmpty=Boolean.FALSE;
 
     @BeforeSuite
     public void executeEnvironment() throws IOException
@@ -57,6 +58,12 @@ public class TestNgExecuter {
                 XmlTest test = new XmlTest(suite);
                 test.setName("AutomationTests");
                 List<XmlClass> classes = new ArrayList<>();
+
+                if (tcList.size()<=0){
+                    tcListEmpty=Boolean.TRUE;
+                    log.info("No Test cases found for pattern : " +deployment.getName() + ". Hence skipping!!");
+                    continue;
+                }
 
                 for (Object className : tcList){
                     try {

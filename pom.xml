@@ -34,48 +34,17 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <inherited>false</inherited>
                 <configuration>
-                    <argLine>-Xms512m -Xmx1024m</argLine>
+                    <!--<argLine>-Xms512m -Xmx1024m</argLine>-->
                     <!--<argLine>-Xmx1024m -XX:PermSize=256m -XX:MaxPermSize=512m -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005</argLine>-->
 
                 <suiteXmlFiles>
                     <suiteXmlFile>src/test/resources/testng-server-mgt.xml</suiteXmlFile>
                 </suiteXmlFiles>
-
-                    <!--suiteXmlFiles>
-                        <suiteXmlFile>src/test/resources/testng-server-mgt.xml</suiteXmlFile>
-                        <suiteXmlFile>src/test/resources/testng_pattern1.xml</suiteXmlFile>
-                        <suiteXmlFile>src/test/resources/testng_pattern2.xml</suiteXmlFile>
-                    </suiteXmlFiles-->
-
-                    <systemProperties>
-                        <property>
-                            <name>maven.test.haltafterfailure</name>
-                            <value>false</value>
-                        </property>
-                        <property>
-                            <name>java.io.tmpdir</name>
-                            <value>${basedir}/target/</value>
-                        </property>
-                        <property>
-                            <name>carbon.zip</name>
-                            <value>
-                                ${basedir}/main/resources/wso2am-${project.version}.zip
-                            </value>
-                        </property>
-                        <property>
-                            <name>framework.resource.location</name>
-                            <value>
-                                ${basedir}/src/test/resources/
-                            </value>
-                        </property>
-                        <property>
-                            <name>usedefaultlisteners</name>
-                            <value>false</value>
-                        </property>
-                        <sec.verifier.dir>${basedir}/target/security-verifier/</sec.verifier.dir>
-                        <instr.file>${basedir}/src/test/resources/instrumentation.txt</instr.file>
-                        <filters.file>${basedir}/src/test/resources/filters.txt</filters.file>
-                    </systemProperties>
+                    <systemPropertyVariables>
+                        <framework.resource.location>
+                            ${basedir}/src/test/resources/
+                        </framework.resource.location>
+                    </systemPropertyVariables>
                     <workingDirectory>${basedir}/target</workingDirectory>
                 </configuration>
             </plugin>
@@ -284,11 +253,11 @@
             <artifactId>distributed-automation-framework</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>org.wso2.carbon.automation</groupId>
-            <artifactId>org.wso2.carbon.automation.engine</artifactId>
-            <version>5.0.0-SNAPSHOT</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.wso2.carbon.automation</groupId>-->
+            <!--<artifactId>org.wso2.carbon.automation.engine</artifactId>-->
+            <!--<version>5.0.0-SNAPSHOT</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>

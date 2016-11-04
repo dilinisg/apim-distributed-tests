@@ -36,9 +36,6 @@ import org.wso2.apim.deployment.base.APIMBaseTest;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.automation.test.utils.http.client.HttpResponse;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-
 
 public class APICreationInvocationTestCase extends APIMBaseTest {
     private final Log log = LogFactory.getLog(APICreationInvocationTestCase.class);
@@ -47,7 +44,6 @@ public class APICreationInvocationTestCase extends APIMBaseTest {
     private String apiName = "TestSampleApi1";
     private String apiContext = "testSampleApi1";
     private String appName = "sample-application1";
-    private Map<String, String> requestHeaders = new HashMap<String, String>();
 
     @Factory(dataProvider = "userModeDataProvider")
     public APICreationInvocationTestCase(TestUserMode userMode) {
@@ -56,21 +52,18 @@ public class APICreationInvocationTestCase extends APIMBaseTest {
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment(ITestContext ctx) throws Exception {
-        super.init(userMode);
-        //String publisherURLHttp = getPublisherURLHttp();
-        //String storeURLHttp = getStoreURLHttp();
 
         apiStore = new APIStoreRestClient(storeURL);
         apiPublisher = new APIPublisherRestClient(publisherURL);
 
-        apiPublisher.login(user.getUserName(), user.getPassword());
-        apiStore.login(user.getUserName(), user.getPassword());
+        apiPublisher.login("admin", "admin");
+        apiStore.login("admin", "admin");
 
     }
 
     @Test(groups = {"wso2.am"}, description = "Sample API creation")
     public void testAPICreation() throws Exception {
-        String backendEndPoint = getBackendEndServiceEndPointHttp("jaxrs_basic/services/customers/customerservice");
+        String backendEndPoint = "http://wso2.com";
         APIRequest apiRequest = new APIRequest(apiName, apiContext,
                                                new URL(backendEndPoint));
         HttpResponse serviceResponse = apiPublisher.addAPI(apiRequest);
@@ -81,7 +74,7 @@ public class APICreationInvocationTestCase extends APIMBaseTest {
     public void testAPIPublishing() throws Exception {
 
         APILifeCycleStateRequest updateRequest =
-                new APILifeCycleStateRequest(apiName, user.getUserName(),
+                new APILifeCycleStateRequest(apiName, "admin",
                                              APILifeCycleState.PUBLISHED);
         HttpResponse serviceResponse = apiPublisher.changeAPILifeCycleStatus(updateRequest);
         Thread.sleep(10000);
@@ -99,7 +92,7 @@ public class APICreationInvocationTestCase extends APIMBaseTest {
     @Test(groups = {"wso2.am"}, description = "API Subscription", dependsOnMethods = "testApplicationCreation")
     public void testAPISubscription() throws Exception {
 
-        String provider = user.getUserName();
+        String provider = "admin";
 
         SubscriptionRequest subscriptionRequest = new SubscriptionRequest(apiName, provider);
         subscriptionRequest.setApplicationName(appName);
