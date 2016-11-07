@@ -64,11 +64,11 @@ public class APIMIntegrationBaseTest {
     protected User user;
     protected HashMap<String,String> instanceMap;
 
-    protected String storeURL;
-    protected String publisherURL;
-    protected String keyManagerURL;
-    protected String gateWayManagerURL;
-    protected String gateWayWorkerURL;
+    protected static String storeURL;
+    protected static String publisherURL;
+    protected static String keyManagerURL;
+    protected static String gateWayManagerURL;
+    protected static String gateWayWorkerURL;
 
 
     /**
@@ -78,7 +78,7 @@ public class APIMIntegrationBaseTest {
      * @throws APIManagerIntegrationTestException - if test configuration init fails
      */
     protected void init(String pattern) throws APIManagerIntegrationTestException {
-        userMode = TestUserMode.SUPER_TENANT_ADMIN;
+       // userMode = TestUserMode.SUPER_TENANT_ADMIN;
         setURLs(pattern);
     }
 
@@ -97,19 +97,19 @@ public class APIMIntegrationBaseTest {
         for (InstanceUrls url : urlList){
             if (instanceMap != null) {
                 if (url.getLable().equals(instanceMap.get(APIMIntegrationConstants.AM_STORE_INSTANCE))) {
-                    storeURL=getHTTPSUrl("servlet-http",url.getHostIP(),url.getPorts(),"/store");
+                    storeURL=getHTTPSUrl("servlet-http",url.getHostIP(),url.getPorts(),APIMIntegrationConstants.AM_STORE_CONTEXT);
                 }
                 if (url.getLable().equals(instanceMap.get(APIMIntegrationConstants.AM_PUBLISHER_INSTANCE))) {
-                    publisherURL=getHTTPSUrl("servlet-http",url.getHostIP(),url.getPorts(),"/publisher");
+                    publisherURL=getHTTPSUrl("servlet-http",url.getHostIP(),url.getPorts(),APIMIntegrationConstants.AM_PUBLISHER_CONTEXT);
                 }
                 if (url.getLable().equals(instanceMap.get(APIMIntegrationConstants.AM_KEY_MANAGER_INSTANCE))) {
-                    keyManagerURL=getHTTPSUrl("servlet-http",url.getHostIP(),url.getPorts(),"");
+                    keyManagerURL=getHTTPSUrl("servlet-http",url.getHostIP(),url.getPorts(),APIMIntegrationConstants.AM_KEY_MANAGER_CONTEXT);
                 }
                 if (url.getLable().equals(instanceMap.get(APIMIntegrationConstants.AM_GATEWAY_MGT_INSTANCE))) {
-                    gateWayManagerURL=getHTTPSUrl("servlet-http",url.getHostIP(),url.getPorts(),"");
+                    gateWayManagerURL=getHTTPSUrl("servlet-http",url.getHostIP(),url.getPorts(),APIMIntegrationConstants.AM_GATEWAY_MGT_CONTEXT);
                 }
                 if (url.getLable().equals(instanceMap.get(APIMIntegrationConstants.AM_GATEWAY_WRK_INSTANCE))) {
-                    gateWayWorkerURL=getHTTPSUrl("pass-through-http",url.getHostIP(),url.getPorts(),"");
+                    gateWayWorkerURL=getHTTPSUrl("pass-through-http",url.getHostIP(),url.getPorts(),APIMIntegrationConstants.AM_GATEWAY_WRK_CONTEXT);
                 }
             }
         }

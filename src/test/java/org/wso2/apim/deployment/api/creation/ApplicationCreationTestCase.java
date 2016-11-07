@@ -12,9 +12,6 @@ import org.wso2.apim.deployment.base.APIMBaseTest;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.automation.test.utils.http.client.HttpResponse;
 
-/**
- * Created by yasassri on 11/2/16.
- */
 public class ApplicationCreationTestCase extends APIMBaseTest {
     private APIPublisherRestClient apiPublisher;
     private APIStoreRestClient apiStore;
@@ -22,14 +19,10 @@ public class ApplicationCreationTestCase extends APIMBaseTest {
 
     @Factory(dataProvider = "userModeDataProvider")
     public ApplicationCreationTestCase(TestUserMode userMode) {
-        this.userMode = userMode;
     }
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment(ITestContext ctx) throws Exception {
-        super.init(userMode);
-        //String publisherURLHttp = getPublisherURLHttp();
-        //String storeURLHttp = getStoreURLHttp();
 
         apiStore = new APIStoreRestClient(storeURL);
         apiPublisher = new APIPublisherRestClient(publisherURL);

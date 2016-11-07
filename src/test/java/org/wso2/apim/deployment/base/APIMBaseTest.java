@@ -43,8 +43,8 @@ public class APIMBaseTest extends APIMIntegrationBaseTest {
     }
 
     @BeforeClass(alwaysRun = true)
-    public void init() throws APIManagerIntegrationTestException {
-      //super.init();
+    public void init(ITestContext ctx) throws APIManagerIntegrationTestException {
+      
     }
 
     @AfterSuite(alwaysRun = true)
