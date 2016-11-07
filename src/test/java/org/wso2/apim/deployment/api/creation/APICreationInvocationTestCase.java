@@ -43,11 +43,10 @@ public class APICreationInvocationTestCase extends APIMBaseTest {
     private APIStoreRestClient apiStore;
     private String apiName = "TestSampleApi1";
     private String apiContext = "testSampleApi1";
-    private String appName = "sample-application1";
+    private String appName = "sample-application2";
 
     @Factory(dataProvider = "userModeDataProvider")
     public APICreationInvocationTestCase(TestUserMode userMode) {
-        this.userMode = userMode;
     }
 
     @BeforeClass(alwaysRun = true)
