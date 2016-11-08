@@ -250,7 +250,7 @@
     <dependencies>
         <dependency>
             <groupId>org.wso2.carbon.automation</groupId>
-            <artifactId>distributed-automation-framework</artifactId>
+            <artifactId>distributed-test-execution-plugin</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <!--<dependency>-->

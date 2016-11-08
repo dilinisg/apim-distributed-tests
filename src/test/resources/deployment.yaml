@@ -6,7 +6,7 @@ deployments:
     repository: git@github.com:yasassri/kubernetes-artifacts.git
     suite: pattern1
     undeployscripts: wso2am/undeploy.sh
-    filePath: data.json
+    filePath: deployment.json
     instancemap :
     -
       store : wso2am-default
