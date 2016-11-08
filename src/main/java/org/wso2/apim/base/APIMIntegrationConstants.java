@@ -29,12 +29,11 @@ public class APIMIntegrationConstants {
     public static final String AM_GATEWAY_WRK_INSTANCE = "gatewayworker";
     public static final String AM_KEY_MANAGER_INSTANCE = "keymanager";
     public static final String BACKEND_SERVER_INSTANCE = "backend-server";
-    public static final String AM_STORE_CONTEXT ="/store";
-    public static final String AM_PUBLISHER_CONTEXT ="/publisher";
-    public static final String AM_KEY_MANAGER_CONTEXT ="";
-    public static final String AM_GATEWAY_MGT_CONTEXT ="";
-    public static final String AM_GATEWAY_WRK_CONTEXT ="";
-
+    public static final String AM_STORE_CONTEXT = "/store";
+    public static final String AM_PUBLISHER_CONTEXT = "/publisher";
+    public static final String AM_KEY_MANAGER_CONTEXT = "";
+    public static final String AM_GATEWAY_MGT_CONTEXT = "";
+    public static final String AM_GATEWAY_WRK_CONTEXT = "";
 
     //Response element names
     public static final String API_RESPONSE_ELEMENT_NAME_ERROR = "error";

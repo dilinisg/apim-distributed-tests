@@ -36,7 +36,8 @@ public class APIResourceBean {
      * @param resourceMethodThrottlingTier - Throttling tier of the resource method
      * @param uriTemplate                  - URL template of the resource
      */
-    public APIResourceBean(String resourceMethod, String resourceMethodAuthType, String resourceMethodThrottlingTier, String uriTemplate) {
+    public APIResourceBean(String resourceMethod, String resourceMethodAuthType, String resourceMethodThrottlingTier,
+            String uriTemplate) {
         this.resourceMethod = resourceMethod;
         this.resourceMethodAuthType = resourceMethodAuthType;
         this.resourceMethodThrottlingTier = resourceMethodThrottlingTier;

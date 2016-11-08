@@ -29,6 +29,7 @@ import org.wso2.apim.bean.SubscriptionRequest;
 import org.wso2.apim.exception.APIManagerIntegrationTestException;
 import org.wso2.carbon.automation.test.utils.http.client.HttpRequestUtil;
 import org.wso2.carbon.automation.test.utils.http.client.HttpResponse;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
@@ -57,15 +58,12 @@ public class APIStoreRestClient {
      * @return - http response
      * @throws org.wso2.am.integration.test.utils.APIManagerIntegrationTestException - Throws if login to store fails
      */
-    public HttpResponse login(String userName, String password)
-            throws APIManagerIntegrationTestException {
+    public HttpResponse login(String userName, String password) throws APIManagerIntegrationTestException {
         HttpResponse response;
-        log.info("Login to Store " + backendURL + " as the user " + userName );
+        log.info("Login to Store " + backendURL + " as the user " + userName);
         try {
-            response = HttpRequestUtil.doPost(
-                    new URL(backendURL + "/site/blocks/user/login/ajax/login.jag"),
-                    "action=login&username=" + userName + "&password=" + password + "",
-                    requestHeaders);
+            response = HttpRequestUtil.doPost(new URL(backendURL + "/site/blocks/user/login/ajax/login.jag"),
+                    "action=login&username=" + userName + "&password=" + password + "", requestHeaders);
         } catch (Exception e) {
             throw new APIManagerIntegrationTestException("Unable to login to the store app ", e);
         }
@@ -87,12 +85,11 @@ public class APIStoreRestClient {
      * @return - http response
      * @throws org.wso2.am.integration.test.utils.APIManagerIntegrationTestException - throws if subscription fails
      */
-    public HttpResponse subscribe(SubscriptionRequest subscriptionRequest)
-            throws APIManagerIntegrationTestException {
+    public HttpResponse subscribe(SubscriptionRequest subscriptionRequest) throws APIManagerIntegrationTestException {
         try {
             checkAuthentication();
-            return HttpRequestUtil.doPost(
-                    new URL(backendURL + "/site/blocks/subscription/subscription-add/ajax/subscription-add.jag"),
+            return HttpRequestUtil.doPost(new URL(
+                            backendURL + "/site/blocks/subscription/subscription-add/ajax/subscription-add.jag"),
                     subscriptionRequest.generateRequestParameters(), requestHeaders);
         } catch (Exception e) {
             throw new APIManagerIntegrationTestException("subscript to api fails", e);
@@ -114,8 +111,8 @@ public class APIStoreRestClient {
             String appId = getApplicationId(responseApp.getData(), generateAppKeyRequest.getApplication());
             generateAppKeyRequest.setAppId(appId);
 
-            return HttpRequestUtil.doPost(
-                    new URL(backendURL + "/site/blocks/subscription/subscription-add/ajax/subscription-add.jag"),
+            return HttpRequestUtil.doPost(new URL(
+                            backendURL + "/site/blocks/subscription/subscription-add/ajax/subscription-add.jag"),
                     generateAppKeyRequest.generateRequestParameters(), requestHeaders);
 
         } catch (Exception e) {
@@ -133,9 +130,9 @@ public class APIStoreRestClient {
     public HttpResponse getAPI() throws APIManagerIntegrationTestException {
         try {
             checkAuthentication();
-            return HttpRequestUtil.doPost(
-                    new URL(backendURL + "store/site/blocks/api/listing/ajax/list.jag?action=getAllPublishedAPIs"),
-                    "", requestHeaders);
+            return HttpRequestUtil.doPost(new URL(
+                            backendURL + "store/site/blocks/api/listing/ajax/list.jag?action=getAllPublishedAPIs"), "",
+                    requestHeaders);
         } catch (Exception e) {
             throw new APIManagerIntegrationTestException("Unable to retrieve API information ", e);
         }
@@ -171,9 +168,8 @@ public class APIStoreRestClient {
      * @return - http response of generate access token api call
      * @throws org.wso2.am.integration.test.utils.APIManagerIntegrationTestException - throws if generating APIM access token fails
      */
-    public HttpResponse generateUserAccessKey(String consumeKey, String consumerSecret,
-                                              String messageBody, URL tokenEndpointURL)
-            throws APIManagerIntegrationTestException {
+    public HttpResponse generateUserAccessKey(String consumeKey, String consumerSecret, String messageBody,
+            URL tokenEndpointURL) throws APIManagerIntegrationTestException {
 
         try {
             checkAuthentication();
@@ -200,9 +196,9 @@ public class APIStoreRestClient {
     public HttpResponse getAllPublishedAPIs() throws APIManagerIntegrationTestException {
         try {
             checkAuthentication();
-            return HttpRequestUtil.doGet(
-                    backendURL + "store/site/blocks/api/listing/ajax/list.jag?action=getAllPublishedAPIs",
-                    requestHeaders);
+            return HttpRequestUtil
+                    .doGet(backendURL + "store/site/blocks/api/listing/ajax/list.jag?action=getAllPublishedAPIs",
+                            requestHeaders);
         } catch (Exception e) {
             throw new APIManagerIntegrationTestException("Unable to get retrieve all published APIs ", e);
         }
@@ -217,10 +213,8 @@ public class APIStoreRestClient {
     public HttpResponse getAllApplications() throws APIManagerIntegrationTestException {
         try {
             checkAuthentication();
-            return HttpRequestUtil.doGet(
-                    backendURL + "store/site/blocks/application/application-list/ajax/" +
-                    "application-list.jag?action=getApplications",
-                    requestHeaders);
+            return HttpRequestUtil.doGet(backendURL + "store/site/blocks/application/application-list/ajax/" +
+                    "application-list.jag?action=getApplications", requestHeaders);
         } catch (Exception e) {
             throw new APIManagerIntegrationTestException("Unable to retrieve all applications ", e);
         }
@@ -238,14 +232,12 @@ public class APIStoreRestClient {
         try {
 
             checkAuthentication();
-            return HttpRequestUtil.doGet(
-                    backendURL + "store/site/blocks/subscription/subscription-list/ajax/" +
+            return HttpRequestUtil.doGet(backendURL + "store/site/blocks/subscription/subscription-list/ajax/" +
                     "subscription-list.jag?action=getSubscriptionByApplication&app=" +
                     applicationName, requestHeaders);
 
         } catch (Exception e) {
-            throw new APIManagerIntegrationTestException("Unable to retrieve the application -  " +
-                                                         applicationName, e);
+            throw new APIManagerIntegrationTestException("Unable to retrieve the application -  " + applicationName, e);
         }
 
     }
@@ -260,12 +252,11 @@ public class APIStoreRestClient {
      * @return - http response of add rating request
      * @throws org.wso2.am.integration.test.utils.APIManagerIntegrationTestException - throws if rating of api fails
      */
-    public HttpResponse addRatingToAPI(String apiName, String version, String provider,
-                                       String rating) throws APIManagerIntegrationTestException {
+    public HttpResponse addRatingToAPI(String apiName, String version, String provider, String rating)
+            throws APIManagerIntegrationTestException {
         try {
             checkAuthentication();
-            return HttpRequestUtil.doGet(
-                    backendURL + "store/site/blocks/api/api-info/ajax/api-info.jag?" +
+            return HttpRequestUtil.doGet(backendURL + "store/site/blocks/api/api-info/ajax/api-info.jag?" +
                     "action=addRating&name=" + apiName + "&version=" + version + "&provider=" +
                     provider + "&rating=" + rating, requestHeaders);
         } catch (Exception e) {
@@ -287,14 +278,12 @@ public class APIStoreRestClient {
         try {
 
             checkAuthentication();
-            return HttpRequestUtil.doGet(
-                    backendURL + "store/site/blocks/api/api-info/ajax/api-info.jag?" +
+            return HttpRequestUtil.doGet(backendURL + "store/site/blocks/api/api-info/ajax/api-info.jag?" +
                     "action=removeRating&name=" + apiName + "&version=" + version +
                     "&provider=" + provider, requestHeaders);
 
         } catch (Exception e) {
-            throw new APIManagerIntegrationTestException("Unable to remove rating of API -  " +
-                                                         apiName, e);
+            throw new APIManagerIntegrationTestException("Unable to remove rating of API -  " + apiName, e);
         }
     }
 
@@ -307,8 +296,7 @@ public class APIStoreRestClient {
     public HttpResponse isRatingActivated() throws APIManagerIntegrationTestException {
         try {
             checkAuthentication();
-            return HttpRequestUtil.doGet(
-                    backendURL + "store/site/blocks/api/api-info/ajax/api-info.jag?" +
+            return HttpRequestUtil.doGet(backendURL + "store/site/blocks/api/api-info/ajax/api-info.jag?" +
                     "action=isRatingActivated", requestHeaders);
         } catch (Exception e) {
             throw new APIManagerIntegrationTestException("Rating status cannot be retrieved", e);
@@ -328,14 +316,12 @@ public class APIStoreRestClient {
             throws APIManagerIntegrationTestException {
         try {
             checkAuthentication();
-            return HttpRequestUtil.doGet(
-                    backendURL + "store/site/blocks/api/listing/ajax/list.jag?" +
+            return HttpRequestUtil.doGet(backendURL + "store/site/blocks/api/listing/ajax/list.jag?" +
                     "action=getAllDocumentationOfAPI&name=" + apiName +
                     "&version=" + version + "&provider=" + provider, requestHeaders);
 
         } catch (Exception e) {
-            throw new APIManagerIntegrationTestException("Unable to retrieve documentation for - " +
-                                                         apiName, e);
+            throw new APIManagerIntegrationTestException("Unable to retrieve documentation for - " + apiName, e);
 
         }
     }
@@ -354,11 +340,11 @@ public class APIStoreRestClient {
         try {
             checkAuthentication();
             return HttpRequestUtil.doGet(backendURL + "store/site/blocks/api/listing/ajax/list.jag?" +
-                                         "action=getAllPaginatedPublishedAPIs&tenant=" + tenant +
-                                         "&start=" + start + "&end=" + end, requestHeaders);
+                    "action=getAllPaginatedPublishedAPIs&tenant=" + tenant +
+                    "&start=" + start + "&end=" + end, requestHeaders);
         } catch (Exception e) {
             throw new APIManagerIntegrationTestException("Unable to retrieve paginated published " +
-                                                         "APIs for tenant - " + tenant, e);
+                    "APIs for tenant - " + tenant, e);
         }
     }
 
@@ -369,16 +355,15 @@ public class APIStoreRestClient {
      * @return - http response of published API
      * @throws org.wso2.am.integration.test.utils.APIManagerIntegrationTestException - throws if published API retrieval fails.
      */
-    public HttpResponse getAllPublishedAPIs(String tenant)
-            throws APIManagerIntegrationTestException {
+    public HttpResponse getAllPublishedAPIs(String tenant) throws APIManagerIntegrationTestException {
         try {
             checkAuthentication();
-            return HttpRequestUtil.doPost(
-                    new URL(backendURL + "store/site/blocks/api/listing/ajax/list.jag?action=getAllPublishedAPIs&tenant=" +
+            return HttpRequestUtil.doPost(new URL(
+                    backendURL + "store/site/blocks/api/listing/ajax/list.jag?action=getAllPublishedAPIs&tenant=" +
                             tenant), "", requestHeaders);
         } catch (Exception e) {
             throw new APIManagerIntegrationTestException("Unable to retrieve published" +
-                                                         "APIs for tenant - " + tenant, e);
+                    "APIs for tenant - " + tenant, e);
 
         }
     }
@@ -393,17 +378,15 @@ public class APIStoreRestClient {
      * @return - http response of add application
      * @throws org.wso2.am.integration.test.utils.APIManagerIntegrationTestException - if fails to add application
      */
-    public HttpResponse addApplication(String application, String tier, String callbackUrl,
-                                       String description)
+    public HttpResponse addApplication(String application, String tier, String callbackUrl, String description)
             throws APIManagerIntegrationTestException {
         try {
             checkAuthentication();
-            return HttpRequestUtil.doPost(
-                    new URL(backendURL +
-                            "/site/blocks/application/application-add" +
-                            "/ajax/application-add.jag?action=addApplication&tier=" +
-                            tier + "&callbackUrl=" + callbackUrl + "&description=" + description +
-                            "&application=" + application), "", requestHeaders);
+            return HttpRequestUtil.doPost(new URL(backendURL +
+                    "/site/blocks/application/application-add" +
+                    "/ajax/application-add.jag?action=addApplication&tier=" +
+                    tier + "&callbackUrl=" + callbackUrl + "&description=" + description +
+                    "&application=" + application), "", requestHeaders);
 
         } catch (Exception e) {
             throw new APIManagerIntegrationTestException("Unable to add application - " + application, e);
@@ -420,9 +403,8 @@ public class APIStoreRestClient {
     public HttpResponse getApplications() throws APIManagerIntegrationTestException {
         try {
             checkAuthentication();
-            return HttpRequestUtil.doPost(
-                    new URL(backendURL + "store/site/blocks/application/application-list/ajax/" +
-                            "application-list.jag?action=getApplications"), "", requestHeaders);
+            return HttpRequestUtil.doPost(new URL(backendURL + "store/site/blocks/application/application-list/ajax/" +
+                    "application-list.jag?action=getApplications"), "", requestHeaders);
         } catch (Exception e) {
             throw new APIManagerIntegrationTestException("Unable to get applications", e);
 
@@ -436,12 +418,11 @@ public class APIStoreRestClient {
      * @return - http response of remove application request
      * @throws org.wso2.am.integration.test.utils.APIManagerIntegrationTestException - throws if remove application fails
      */
-    public HttpResponse removeApplication(String application)
-            throws APIManagerIntegrationTestException {
+    public HttpResponse removeApplication(String application) throws APIManagerIntegrationTestException {
         try {
             checkAuthentication();
-            return HttpRequestUtil.doPost(
-                    new URL(backendURL + "store/site/blocks/application/application-remove/ajax/application-remove.jag?" +
+            return HttpRequestUtil.doPost(new URL(
+                    backendURL + "store/site/blocks/application/application-remove/ajax/application-remove.jag?" +
                             "action=removeApplication&application=" + application), "", requestHeaders);
         } catch (Exception e) {
             throw new APIManagerIntegrationTestException("Unable to remove application - " + application, e);
@@ -460,13 +441,12 @@ public class APIStoreRestClient {
      * @return - http response of update application
      * @throws org.wso2.am.integration.test.utils.APIManagerIntegrationTestException - throws if update application fails
      */
-    public HttpResponse updateApplication(String applicationOld, String applicationNew,
-                                          String callbackUrlNew, String descriptionNew, String tier)
-            throws APIManagerIntegrationTestException {
+    public HttpResponse updateApplication(String applicationOld, String applicationNew, String callbackUrlNew,
+            String descriptionNew, String tier) throws APIManagerIntegrationTestException {
         try {
             checkAuthentication();
-            return HttpRequestUtil.doPost(
-                    new URL(backendURL + "store/site/blocks/application/application-update/ajax/application-update.jag?" +
+            return HttpRequestUtil.doPost(new URL(
+                    backendURL + "store/site/blocks/application/application-update/ajax/application-update.jag?" +
                             "action=updateApplication&applicationOld=" + applicationOld + "&applicationNew=" +
                             applicationNew + "&callbackUrlNew=" + callbackUrlNew + "&descriptionNew=" +
                             descriptionNew + "&tier=" + tier), "", requestHeaders);
@@ -487,8 +467,8 @@ public class APIStoreRestClient {
     public HttpResponse getAllSubscriptions() throws APIManagerIntegrationTestException {
         try {
             checkAuthentication();
-            return HttpRequestUtil.doPost(
-                    new URL(backendURL + "store/site/blocks/subscription/subscription-list/ajax/subscription-list.jag?" +
+            return HttpRequestUtil.doPost(new URL(
+                    backendURL + "store/site/blocks/subscription/subscription-list/ajax/subscription-list.jag?" +
                             "action=getAllSubscriptions"), "", requestHeaders);
         } catch (Exception e) {
             throw new APIManagerIntegrationTestException("Unable to get all subscriptions", e);
@@ -506,13 +486,12 @@ public class APIStoreRestClient {
      * @return - http response of unsubscription request
      * @throws org.wso2.am.integration.test.utils.APIManagerIntegrationTestException - Throws if unsubscription fails
      */
-    public HttpResponse removeAPISubscription(String API, String version, String provider,
-                                              String applicationId)
+    public HttpResponse removeAPISubscription(String API, String version, String provider, String applicationId)
             throws APIManagerIntegrationTestException {
         try {
             checkAuthentication();
-            return HttpRequestUtil.doPost(
-                    new URL(backendURL + "store/site/blocks/subscription/subscription-remove/ajax/subscription-remove.jag?" +
+            return HttpRequestUtil.doPost(new URL(
+                    backendURL + "store/site/blocks/subscription/subscription-remove/ajax/subscription-remove.jag?" +
                             "action=removeSubscription&name=" + API + "&version=" + version + "&provider=" + provider +
                             "&applicationId=" + applicationId), "", requestHeaders);
         } catch (Exception e) {
@@ -531,16 +510,15 @@ public class APIStoreRestClient {
         try {
             checkAuthentication();
 
-            return HttpRequestUtil.doPost(
-                    new URL(backendURL + "store/site/blocks/tag/tag-cloud/ajax/list.jag?action=getAllTags"),
-                    "", requestHeaders);
+            return HttpRequestUtil
+                    .doPost(new URL(backendURL + "store/site/blocks/tag/tag-cloud/ajax/list.jag?action=getAllTags"), "",
+                            requestHeaders);
 
         } catch (Exception e) {
             throw new APIManagerIntegrationTestException("Unable to get all tags", e);
         }
 
     }
-
 
     /**
      * Add comment to given API
@@ -556,8 +534,8 @@ public class APIStoreRestClient {
             throws APIManagerIntegrationTestException {
         try {
             checkAuthentication();
-            return HttpRequestUtil.doPost(
-                    new URL(backendURL + "store/site/blocks/comment/comment-add/ajax/comment-add.jag?" +
+            return HttpRequestUtil
+                    .doPost(new URL(backendURL + "store/site/blocks/comment/comment-add/ajax/comment-add.jag?" +
                             "action=addComment&name=" + apiName + "&version=" + version + "&provider=" +
                             provider + "&comment=" + comment), "", requestHeaders);
         } catch (Exception e) {
@@ -574,8 +552,7 @@ public class APIStoreRestClient {
     public HttpResponse isCommentActivated() throws APIManagerIntegrationTestException {
         try {
             checkAuthentication();
-            return HttpRequestUtil.doGet(
-                    backendURL + "store/site/blocks/comment/comment-add/ajax/comment-add.jag?" +
+            return HttpRequestUtil.doGet(backendURL + "store/site/blocks/comment/comment-add/ajax/comment-add.jag?" +
                     "action=isCommentActivated", requestHeaders);
         } catch (Exception e) {
             throw new APIManagerIntegrationTestException("Failed to get comment activation status", e);
@@ -590,17 +567,15 @@ public class APIStoreRestClient {
      * @return - http response of recently added API request
      * @throws org.wso2.am.integration.test.utils.APIManagerIntegrationTestException - throws if
      */
-    public HttpResponse getRecentlyAddedAPIs(String tenant, String limit)
-            throws APIManagerIntegrationTestException {
+    public HttpResponse getRecentlyAddedAPIs(String tenant, String limit) throws APIManagerIntegrationTestException {
         try {
             checkAuthentication();
-            return HttpRequestUtil.doPost(
-                    new URL(backendURL + "store/site/blocks/api/" +
-                            "recently-added/ajax/list.jag?action=getRecentlyAddedAPIs&tenant=" +
-                            tenant + "&limit=" + limit), "", requestHeaders);
+            return HttpRequestUtil.doPost(new URL(backendURL + "store/site/blocks/api/" +
+                    "recently-added/ajax/list.jag?action=getRecentlyAddedAPIs&tenant=" +
+                    tenant + "&limit=" + limit), "", requestHeaders);
         } catch (Exception e) {
-            throw new APIManagerIntegrationTestException("Failed to get recently added APIs from tenant - " +
-                                                         tenant, e);
+            throw new APIManagerIntegrationTestException("Failed to get recently added APIs from tenant - " + tenant,
+                    e);
         }
     }
 
@@ -629,12 +604,13 @@ public class APIStoreRestClient {
      * @param apiTag - API tag the need ti filter the api.
      * @return HttpResponse - Response  that contains the web page with filtered API when  click the API Tag link
      * @throws APIManagerIntegrationTestException - Exception throws when check the Authentication and
-     * HttpRequestUtil.sendGetRequest() method call
+     *                                            HttpRequestUtil.sendGetRequest() method call
      */
     public HttpResponse getAPIPageFilteredWithTags(String apiTag) throws APIManagerIntegrationTestException {
         try {
             checkAuthentication();
-            return HttpRequestUtil.sendGetRequest(backendURL + "/store/apis/list", "tag=" + apiTag + "&tenant=carbon.super");
+            return HttpRequestUtil
+                    .sendGetRequest(backendURL + "/store/apis/list", "tag=" + apiTag + "&tenant=carbon.super");
         } catch (IOException ex) {
             throw new APIManagerIntegrationTestException("Exception when get APO page filtered by tag", ex);
         }
@@ -648,52 +624,53 @@ public class APIStoreRestClient {
      * @throws APIManagerIntegrationTestException - Exception throws when check the Authentication and
      *                                            HttpRequestUtil.doPost() method call.
      */
-    public HttpResponse subscribeToAPI(SubscriptionRequest subscriptionRequest) throws APIManagerIntegrationTestException {
+    public HttpResponse subscribeToAPI(SubscriptionRequest subscriptionRequest)
+            throws APIManagerIntegrationTestException {
         //This method  do the same functionality as subscribe(), except this method  always returns the response object
         //regardless of the response code. But subscribe() returns the response object only if  the response code is
         // 200 or else it will return an Exception.
         try {
             checkAuthentication();
-            return HttpRequestUtil.doPost(new URL(backendURL +
-                    "/store/site/blocks/subscription/subscription-add/ajax/subscription-add.jag")
-                    , subscriptionRequest.generateRequestParameters(), requestHeaders);
+            return HttpRequestUtil.doPost(new URL(
+                            backendURL + "/store/site/blocks/subscription/subscription-add/ajax/subscription-add.jag"),
+                    subscriptionRequest.generateRequestParameters(), requestHeaders);
         } catch (Exception ex) {
             throw new APIManagerIntegrationTestException("Exception when Subscribing to a API", ex);
         }
     }
 
+    //    /**
+    //     * Retrieve the API store page as anonymous user.
+    //     *
+    //     * @param storeTenantDomain - Tenant domain of store that need to  get the page.
+    //     * @return HttpResponse - Response with API store page of the provided domain.
+    //     * @throws APIManagerIntegrationTestException - IOException throws from HttpRequestUtil.doGet() method call
+    //     */
+    //
+    //    public HttpResponse getAPIStorePageAsAnonymousUser(String storeTenantDomain) throws APIManagerIntegrationTestException {
+    //        try {
+    //            return HttpRequestUtil.doGet(
+    //                    backendURL + "store/?tenant=" + storeTenantDomain, requestHeaders);
+    //        } catch (Exception ioE) {
+    //            throw new APIManagerIntegrationTestException(
+    //                    "Exception when retrieve the API store page as anonymous user", ioE);
+    //        }
+    //    }
 
-//    /**
-//     * Retrieve the API store page as anonymous user.
-//     *
-//     * @param storeTenantDomain - Tenant domain of store that need to  get the page.
-//     * @return HttpResponse - Response with API store page of the provided domain.
-//     * @throws APIManagerIntegrationTestException - IOException throws from HttpRequestUtil.doGet() method call
-//     */
-//
-//    public HttpResponse getAPIStorePageAsAnonymousUser(String storeTenantDomain) throws APIManagerIntegrationTestException {
-//        try {
-//            return HttpRequestUtil.doGet(
-//                    backendURL + "store/?tenant=" + storeTenantDomain, requestHeaders);
-//        } catch (Exception ioE) {
-//            throw new APIManagerIntegrationTestException(
-//                    "Exception when retrieve the API store page as anonymous user", ioE);
-//        }
-//    }
-
-    public HttpResponse getAPIListFromStoreAsAnonymousUser(String tenantDomain) throws APIManagerIntegrationTestException {
+    public HttpResponse getAPIListFromStoreAsAnonymousUser(String tenantDomain)
+            throws APIManagerIntegrationTestException {
         try {
-            HttpResponse httpResponse = HttpRequestUtil.sendGetRequest(backendURL + "store/site/blocks/api/recently-added/ajax/list.jag"
-                    , "action=getRecentlyAddedAPIs&tenant=" + tenantDomain);
+            HttpResponse httpResponse = HttpRequestUtil
+                    .sendGetRequest(backendURL + "store/site/blocks/api/recently-added/ajax/list.jag",
+                            "action=getRecentlyAddedAPIs&tenant=" + tenantDomain);
 
-            if(new JSONObject(httpResponse.getData()).getBoolean("error")){
+            if (new JSONObject(httpResponse.getData()).getBoolean("error")) {
                 throw new APIManagerIntegrationTestException("Error when getting API list as AsAnonymousUser");
             }
 
             return httpResponse;
         } catch (IOException ioE) {
-            throw new APIManagerIntegrationTestException(
-                    "Exception when retrieve the API list as anonymous user", ioE);
+            throw new APIManagerIntegrationTestException("Exception when retrieve the API list as anonymous user", ioE);
 
         } catch (JSONException e) {
             throw new APIManagerIntegrationTestException("Response message is not JSON Response");

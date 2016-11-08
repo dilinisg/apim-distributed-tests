@@ -25,30 +25,26 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 import org.wso2.apim.base.APIMIntegrationBaseTest;
 import org.wso2.apim.exception.APIManagerIntegrationTestException;
+
 import java.io.IOException;
 
 /**
  * Base test class for all API Manager test cases.
- *
  */
 public class APIMBaseTest extends APIMIntegrationBaseTest {
     private static final Log log = LogFactory.getLog(APIMBaseTest.class);
 
-
-    @BeforeSuite(alwaysRun = true)
-    public void createEnvironment(ITestContext ctx)
+    @BeforeSuite(alwaysRun = true) public void createEnvironment(ITestContext ctx)
             throws APIManagerIntegrationTestException, IOException {
         super.setTestSuite(ctx.getCurrentXmlTest().getSuite().getName());
         super.init(ctx.getCurrentXmlTest().getSuite().getName());
     }
 
-    @BeforeClass(alwaysRun = true)
-    public void init(ITestContext ctx) throws APIManagerIntegrationTestException {
-      
+    @BeforeClass(alwaysRun = true) public void init(ITestContext ctx) throws APIManagerIntegrationTestException {
+
     }
 
-    @AfterSuite(alwaysRun = true)
-    public void deleteEnvironment(ITestContext ctx)
+    @AfterSuite(alwaysRun = true) public void deleteEnvironment(ITestContext ctx)
             throws APIManagerIntegrationTestException, IOException {
         super.unSetTestSuite(ctx.getCurrentXmlTest().getSuite().getName());
     }

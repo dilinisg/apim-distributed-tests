@@ -17,12 +17,16 @@ public class ApplicationCreationTestCase extends APIMBaseTest {
     private APIStoreRestClient apiStore;
     private String appName = "sample-application1";
 
-    @Factory(dataProvider = "userModeDataProvider")
-    public ApplicationCreationTestCase(TestUserMode userMode) {
+    @Factory(dataProvider = "userModeDataProvider") public ApplicationCreationTestCase(TestUserMode userMode) {
     }
 
-    @BeforeClass(alwaysRun = true)
-    public void setEnvironment(ITestContext ctx) throws Exception {
+    @DataProvider public static Object[][] userModeDataProvider() {
+        return new Object[][] { new Object[] { TestUserMode.SUPER_TENANT_ADMIN },
+                //new Object[]{TestUserMode.TENANT_ADMIN},
+        };
+    }
+
+    @BeforeClass(alwaysRun = true) public void setEnvironment(ITestContext ctx) throws Exception {
 
         apiStore = new APIStoreRestClient(storeURL);
         apiPublisher = new APIPublisherRestClient(publisherURL);
@@ -32,18 +36,10 @@ public class ApplicationCreationTestCase extends APIMBaseTest {
 
     }
 
-
-    @Test(groups = {"wso2.am"}, description = "Sample Application Creation")
-    public void testApplicationCreation() throws Exception {
-        HttpResponse serviceResponse = apiStore.addApplication(appName, APIThrottlingTier.UNLIMITED.getState(), "", "this-is-test");
+    @Test(groups = { "wso2.am" }, description = "Sample Application Creation") public void testApplicationCreation()
+            throws Exception {
+        HttpResponse serviceResponse = apiStore
+                .addApplication(appName, APIThrottlingTier.UNLIMITED.getState(), "", "this-is-test");
         verifyResponse(serviceResponse);
-    }
-
-    @DataProvider
-    public static Object[][] userModeDataProvider() {
-        return new Object[][]{
-                new Object[]{TestUserMode.SUPER_TENANT_ADMIN},
-                //new Object[]{TestUserMode.TENANT_ADMIN},
-        };
     }
 }

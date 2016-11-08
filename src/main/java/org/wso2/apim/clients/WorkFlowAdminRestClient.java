@@ -26,44 +26,43 @@ import java.util.Map;
 
 /**
  * Rest client for workflow admin application
- *
  */
 public class WorkFlowAdminRestClient {
 
-	 private String backEndUrl;
-	    private static final String URL_SURFIX = "/admin-dashboard/site/blocks";
-	    private Map<String, String> requestHeaders = new HashMap<String, String>();
+    private static final String URL_SURFIX = "/admin-dashboard/site/blocks";
+    private String backEndUrl;
+    private Map<String, String> requestHeaders = new HashMap<String, String>();
 
-	    public WorkFlowAdminRestClient(String backEndUrl) {
-	        this.backEndUrl = backEndUrl;
-	        if (requestHeaders.get("Content-Type") == null) {
-	            this.requestHeaders.put("Content-Type", "application/x-www-form-urlencoded");
-	        }
-	    }
+    public WorkFlowAdminRestClient(String backEndUrl) {
+        this.backEndUrl = backEndUrl;
+        if (requestHeaders.get("Content-Type") == null) {
+            this.requestHeaders.put("Content-Type", "application/x-www-form-urlencoded");
+        }
+    }
 
-	    public HttpResponse login(String userName, String password)
-	            throws Exception {
-	        HttpResponse response = HttpRequestUtil.doPost(new URL(backEndUrl + URL_SURFIX + "/user/login/ajax/login.jag")
-                    , "action=login&username=" + userName + "&password=" + password + "", requestHeaders);
-	        if (response.getResponseCode() == 200) {
-	            //VerificationUtil.checkErrors(response);
-	            String session = getSession(response.getHeaders());
-	            if (session == null) {
-	                throw new Exception("No session cookie found with response");
-	            }
-	            setSession(session);
-	            return response;
-	        } else {
-	            throw new Exception("User Login failed> " + response.getData());
-	        }
+    public HttpResponse login(String userName, String password) throws Exception {
+        HttpResponse response = HttpRequestUtil.doPost(new URL(backEndUrl + URL_SURFIX + "/user/login/ajax/login.jag"),
+                "action=login&username=" + userName + "&password=" + password + "", requestHeaders);
+        if (response.getResponseCode() == 200) {
+            //VerificationUtil.checkErrors(response);
+            String session = getSession(response.getHeaders());
+            if (session == null) {
+                throw new Exception("No session cookie found with response");
+            }
+            setSession(session);
+            return response;
+        } else {
+            throw new Exception("User Login failed> " + response.getData());
+        }
 
-	    }
-	    private String getSession(Map<String, String> responseHeaders) {
-	        return responseHeaders.get("Set-Cookie");
-	    }
+    }
 
-	    private String setSession(String session) {
-	        return requestHeaders.put("Cookie", session);
-	    }
+    private String getSession(Map<String, String> responseHeaders) {
+        return responseHeaders.get("Set-Cookie");
+    }
+
+    private String setSession(String session) {
+        return requestHeaders.put("Cookie", session);
+    }
 
 }

@@ -22,9 +22,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class AbstractRequest {
+    private static final String ACTION_PARAMETER_VALUE = "action";
     public String action;
     private Map<String, String> parameterMap = new HashMap<String, String>();
-    private static final String ACTION_PARAMETER_VALUE = "action";
 
     /**
      * generate request params to send in http request, with default action

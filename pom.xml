@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <groupId>org.wso2.carbon.automation</groupId>
@@ -37,9 +37,9 @@
                     <!--<argLine>-Xms512m -Xmx1024m</argLine>-->
                     <!--<argLine>-Xmx1024m -XX:PermSize=256m -XX:MaxPermSize=512m -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005</argLine>-->
 
-                <suiteXmlFiles>
-                    <suiteXmlFile>src/test/resources/testng-server-mgt.xml</suiteXmlFile>
-                </suiteXmlFiles>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>src/test/resources/testng-server-mgt.xml</suiteXmlFile>
+                    </suiteXmlFiles>
                     <systemPropertyVariables>
                         <framework.resource.location>
                             ${basedir}/src/test/resources/
@@ -254,9 +254,9 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <!--<dependency>-->
-            <!--<groupId>org.wso2.carbon.automation</groupId>-->
-            <!--<artifactId>org.wso2.carbon.automation.engine</artifactId>-->
-            <!--<version>5.0.0-SNAPSHOT</version>-->
+        <!--<groupId>org.wso2.carbon.automation</groupId>-->
+        <!--<artifactId>org.wso2.carbon.automation.engine</artifactId>-->
+        <!--<version>5.0.0-SNAPSHOT</version>-->
         <!--</dependency>-->
         <dependency>
             <groupId>org.testng</groupId>
@@ -270,19 +270,19 @@
             <version>${carbon.apimgt.version}</version>
         </dependency>
         <!--<dependency>-->
-            <!--<groupId>org.wso2.carbon.automationutils</groupId>-->
-            <!--<artifactId>org.wso2.carbon.integration.common.utils</artifactId>-->
-            <!--<version>${carbon.automationutils.version}</version>-->
-            <!--<exclusions>-->
-                <!--<exclusion>-->
-                    <!--<artifactId>log4j-over-slf4j</artifactId>-->
-                    <!--<groupId>org.slf4j</groupId>-->
-                <!--</exclusion>-->
-                <!--<exclusion>-->
-                    <!--<artifactId>slf4j-jdk14</artifactId>-->
-                    <!--<groupId>org.slf4j</groupId>-->
-                <!--</exclusion>-->
-            <!--</exclusions>-->
+        <!--<groupId>org.wso2.carbon.automationutils</groupId>-->
+        <!--<artifactId>org.wso2.carbon.integration.common.utils</artifactId>-->
+        <!--<version>${carbon.automationutils.version}</version>-->
+        <!--<exclusions>-->
+        <!--<exclusion>-->
+        <!--<artifactId>log4j-over-slf4j</artifactId>-->
+        <!--<groupId>org.slf4j</groupId>-->
+        <!--</exclusion>-->
+        <!--<exclusion>-->
+        <!--<artifactId>slf4j-jdk14</artifactId>-->
+        <!--<groupId>org.slf4j</groupId>-->
+        <!--</exclusion>-->
+        <!--</exclusions>-->
         <!--</dependency>-->
 
         <dependency>
@@ -300,10 +300,10 @@
             <artifactId>org.wso2.carbon.integration.common.utils</artifactId>
             <version>4.4.2</version>
             <exclusions>
-            <exclusion>
-            <artifactId>xalan</artifactId>
-            <groupId>xalan</groupId>
-            </exclusion>
+                <exclusion>
+                    <artifactId>xalan</artifactId>
+                    <groupId>xalan</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
     </dependencies>

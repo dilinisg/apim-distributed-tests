@@ -21,7 +21,6 @@ package org.wso2.apim.bean;
 /**
  * Basic request for subscribe to API
  * action=addAPISubscription&name=apiName&version=1.0.0&provider=provider&tier=Gold&applicationName=DefaultApplication
- *
  */
 public class SubscriptionRequest extends AbstractRequest {
 
@@ -51,8 +50,7 @@ public class SubscriptionRequest extends AbstractRequest {
      * @param appName    - Application name
      * @param tier       - Tire type
      */
-    public SubscriptionRequest(String apiName, String apiVersion, String provider,
-                               String appName, String tier) {
+    public SubscriptionRequest(String apiName, String apiVersion, String provider, String appName, String tier) {
         this.name = apiName;
         this.version = apiVersion;
         this.provider = provider;
@@ -60,13 +58,11 @@ public class SubscriptionRequest extends AbstractRequest {
         this.tier = tier;
     }
 
-    @Override
-    public void setAction() {
+    @Override public void setAction() {
         setAction("addAPISubscription");
     }
 
-    @Override
-    public void init() {
+    @Override public void init() {
         addParameter("name", name);
         addParameter("provider", provider);
         addParameter("version", version);

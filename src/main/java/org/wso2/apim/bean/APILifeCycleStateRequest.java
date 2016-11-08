@@ -18,7 +18,6 @@
 
 package org.wso2.apim.bean;
 
-
 /**
  * action=updateStatus&name=YoutubeFeeds&version=1.0.0&provider=provider1&status=PUBLISHED&publishToGateway=true
  */
@@ -35,13 +34,11 @@ public class APILifeCycleStateRequest extends AbstractRequest {
         this.provider = provider;
     }
 
-    @Override
-    public void setAction() {
+    @Override public void setAction() {
         setAction("updateStatus");
     }
 
-    @Override
-    public void init() {
+    @Override public void init() {
         addParameter("name", name);
         addParameter("status", status);
         addParameter("provider", provider);
@@ -54,7 +51,7 @@ public class APILifeCycleStateRequest extends AbstractRequest {
     }
 
     public String getState() {
-        return  status;
+        return status;
     }
 
     public void setState(APILifeCycleState status) {
