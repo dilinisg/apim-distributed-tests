@@ -20,7 +20,7 @@ package org.wso2.apim.bean;
 
 /**
  * Generate application key request
- *
+ * <p>
  * action=generateApplicationKey&application=DefaultApplication&keytype=PRODUCTION&callbackUrl=&authorizedDomains=ALL&validityTime=360000
  */
 public class APPKeyRequestGenerator extends AbstractRequest {
@@ -36,13 +36,11 @@ public class APPKeyRequestGenerator extends AbstractRequest {
         this.application = application;
     }
 
-    @Override
-    public void setAction() {
+    @Override public void setAction() {
         setAction("generateApplicationKey");
     }
 
-    @Override
-    public void init() {
+    @Override public void init() {
         addParameter("application", application);
         addParameter("keytype", keyType);
         addParameter("callbackUrl", callbackUrl);

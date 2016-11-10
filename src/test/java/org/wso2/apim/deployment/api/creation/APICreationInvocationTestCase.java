@@ -20,21 +20,14 @@ package org.wso2.apim.deployment.api.creation;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.testng.ITestContext;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Factory;
-import org.testng.annotations.Test;
-import org.wso2.apim.bean.APILifeCycleState;
-import org.wso2.apim.bean.APILifeCycleStateRequest;
-import org.wso2.apim.bean.APIRequest;
-import org.wso2.apim.bean.APIThrottlingTier;
-import org.wso2.apim.bean.SubscriptionRequest;
+import org.testng.annotations.*;
+import org.wso2.apim.bean.*;
 import org.wso2.apim.clients.APIPublisherRestClient;
 import org.wso2.apim.clients.APIStoreRestClient;
 import org.wso2.apim.deployment.base.APIMBaseTest;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.automation.test.utils.http.client.HttpResponse;
+
 import java.net.URL;
 
 public class APICreationInvocationTestCase extends APIMBaseTest {
@@ -45,12 +38,16 @@ public class APICreationInvocationTestCase extends APIMBaseTest {
     private String apiContext = "testSampleApi1";
     private String appName = "sample-application2";
 
-    @Factory(dataProvider = "userModeDataProvider")
-    public APICreationInvocationTestCase(TestUserMode userMode) {
+    @Factory(dataProvider = "userModeDataProvider") public APICreationInvocationTestCase(TestUserMode userMode) {
     }
 
-    @BeforeClass(alwaysRun = true)
-    public void setEnvironment(ITestContext ctx) throws Exception {
+    @DataProvider public static Object[][] userModeDataProvider() {
+        return new Object[][] { new Object[] { TestUserMode.SUPER_TENANT_ADMIN },
+                //new Object[]{TestUserMode.TENANT_ADMIN},
+        };
+    }
+
+    @BeforeClass(alwaysRun = true) public void setEnvironment(ITestContext ctx) throws Exception {
 
         apiStore = new APIStoreRestClient(storeURL);
         apiPublisher = new APIPublisherRestClient(publisherURL);
@@ -60,36 +57,37 @@ public class APICreationInvocationTestCase extends APIMBaseTest {
 
     }
 
-    @Test(groups = {"wso2.am"}, description = "Sample API creation")
-    public void testAPICreation() throws Exception {
+    @Test(groups = { "wso2.am" }, description = "Sample API creation") public void testAPICreation() throws Exception {
         String backendEndPoint = "http://wso2.com";
-        APIRequest apiRequest = new APIRequest(apiName, apiContext,
-                                               new URL(backendEndPoint));
+        APIRequest apiRequest = new APIRequest(apiName, apiContext, new URL(backendEndPoint));
         HttpResponse serviceResponse = apiPublisher.addAPI(apiRequest);
         verifyResponse(serviceResponse);
     }
 
-    @Test(groups = {"wso2.am"}, description = "Sample API Publishing", dependsOnMethods = "testAPICreation")
-    public void testAPIPublishing() throws Exception {
+    @Test(groups = {
+            "wso2.am" }, description = "Sample API Publishing", dependsOnMethods = "testAPICreation") public void testAPIPublishing()
+            throws Exception {
 
-        APILifeCycleStateRequest updateRequest =
-                new APILifeCycleStateRequest(apiName, "admin",
-                                             APILifeCycleState.PUBLISHED);
+        APILifeCycleStateRequest updateRequest = new APILifeCycleStateRequest(apiName, "admin",
+                APILifeCycleState.PUBLISHED);
         HttpResponse serviceResponse = apiPublisher.changeAPILifeCycleStatus(updateRequest);
         Thread.sleep(10000);
         verifyResponse(serviceResponse);
 
     }
 
-    @Test(groups = {"wso2.am"}, description = "Sample Application Creation", dependsOnMethods = "testAPICreation")
-    public void testApplicationCreation() throws Exception {
-        HttpResponse serviceResponse = apiStore.addApplication(appName, APIThrottlingTier.UNLIMITED.getState(), "", "this-is-test");
+    @Test(groups = {
+            "wso2.am" }, description = "Sample Application Creation", dependsOnMethods = "testAPICreation") public void testApplicationCreation()
+            throws Exception {
+        HttpResponse serviceResponse = apiStore
+                .addApplication(appName, APIThrottlingTier.UNLIMITED.getState(), "", "this-is-test");
         verifyResponse(serviceResponse);
 
     }
 
-    @Test(groups = {"wso2.am"}, description = "API Subscription", dependsOnMethods = "testApplicationCreation")
-    public void testAPISubscription() throws Exception {
+    @Test(groups = {
+            "wso2.am" }, description = "API Subscription", dependsOnMethods = "testApplicationCreation") public void testAPISubscription()
+            throws Exception {
 
         String provider = "admin";
 
@@ -101,18 +99,9 @@ public class APICreationInvocationTestCase extends APIMBaseTest {
 
     }
 
-    @AfterClass(alwaysRun = true)
-    public void destroy() throws Exception {
-//        apiStore.removeApplication(appName);
-//        super.cleanUp();
-    }
-
-    @DataProvider
-    public static Object[][] userModeDataProvider() {
-        return new Object[][]{
-                new Object[]{TestUserMode.SUPER_TENANT_ADMIN},
-                //new Object[]{TestUserMode.TENANT_ADMIN},
-        };
+    @AfterClass(alwaysRun = true) public void destroy() throws Exception {
+        //        apiStore.removeApplication(appName);
+        //        super.cleanUp();
     }
 }
 

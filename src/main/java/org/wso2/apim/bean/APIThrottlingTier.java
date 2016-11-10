@@ -23,7 +23,7 @@ package org.wso2.apim.bean;
  */
 public enum APIThrottlingTier {
 
-    UNLIMITED("Unlimited"),PLATINUM("Platinum"), GOLD("Gold"),
+    UNLIMITED("Unlimited"), PLATINUM("Platinum"), GOLD("Gold"),
     SILVER("Silver"), BRONZE("Bronze");
     private String tier;
 

@@ -18,7 +18,6 @@
 
 package org.wso2.apim.bean;
 
-
 import org.wso2.carbon.automation.engine.context.beans.ContextUrls;
 
 /**
@@ -41,7 +40,6 @@ public class APIMURLBean {
      */
 
     public APIMURLBean(ContextUrls contextUrls) {
-
 
         String tempUrl = contextUrls.getWebAppURL();
         if (tempUrl.contains("/t/")) {
@@ -76,7 +74,6 @@ public class APIMURLBean {
             tempUrl = tempUrl.replace("/services", "");
         }
         webAppURLNhttps = tempUrl + "/";
-
 
     }
 

@@ -24,8 +24,8 @@
     <test name="lifecycle-pattern1" preserve-order="true" parallel="false">
 
         <classes>
-        <!--<class name="org.wso2.apim.deployment.api.creation.APICreationInvocationTestCase"/>-->
-        <class name="org.wso2.apim.deployment.api.creation.ApplicationCreationTestCase"/>
+            <!--<class name="org.wso2.apim.deployment.api.creation.APICreationInvocationTestCase"/>-->
+            <class name="org.wso2.apim.deployment.api.creation.ApplicationCreationTestCase"/>
         </classes>
     </test>
 

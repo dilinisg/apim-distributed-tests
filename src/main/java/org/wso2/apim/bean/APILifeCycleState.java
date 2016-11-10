@@ -18,7 +18,6 @@
 
 package org.wso2.apim.bean;
 
-
 /**
  * API life cycle state used too update API's in test cases
  */

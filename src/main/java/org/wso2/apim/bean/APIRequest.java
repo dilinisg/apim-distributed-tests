@@ -23,11 +23,12 @@ import org.apache.commons.logging.LogFactory;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.wso2.apim.exception.APIManagerIntegrationTestException;
+
 import java.net.URL;
 
 /**
  * Class to Provides basic API request.
- * <p/>
+ * <p>
  * action=addAPI&name=YoutubeFeeds&visibility=public&version=1.0.0&description=Youtube Live Feeds&endpointType=nonsecured
  * &http_checked=http&https_checked=https&endpoint=http://gdata.youtube.com/feeds/api/standardfeeds&wsdl=&
  * tags=youtube,gdata,multimedia&tier=Silver&thumbUrl=http://www.10bigideas.com.au/www/573/files/pf-thumbnail-youtube_logo.jpg
@@ -63,6 +64,28 @@ public class APIRequest extends AbstractRequest {
     private String sandbox = "";
     private String provider = "admin";
 
+    /**
+     * This method will create API request.
+     *
+     * @param apiName     - Name of the API
+     * @param context     - API context
+     * @param endpointUrl - API endpoint URL
+     * @throws APIManagerIntegrationTestException - Throws if API request cannot be generated.
+     */
+    public APIRequest(String apiName, String context, URL endpointUrl) throws APIManagerIntegrationTestException {
+        this.name = apiName;
+        this.context = context;
+        try {
+            this.endpoint = new JSONObject(
+                    "{\"production_endpoints\":{\"url\":\"" + endpointUrl + "\",\"config\":null},\"endpoint_type\":\""
+                            + endpointUrl.getProtocol() + "\"}");
+        } catch (JSONException e) {
+            log.error("JSON construct error", e);
+            throw new APIManagerIntegrationTestException("JSON construct error", e);
+        }
+
+    }
+
     public String getSandbox() {
         return sandbox;
     }
@@ -87,32 +110,7 @@ public class APIRequest extends AbstractRequest {
         this.wsdl = wsdl;
     }
 
-    /**
-     * This method will create API request.
-     *
-     * @param apiName     - Name of the API
-     * @param context     - API context
-     * @param endpointUrl - API endpoint URL
-     * @throws APIManagerIntegrationTestException - Throws if API request cannot be generated.
-     */
-    public APIRequest(String apiName, String context, URL endpointUrl) throws
-                                                                       APIManagerIntegrationTestException {
-        this.name = apiName;
-        this.context = context;
-        try {
-            this.endpoint =
-                    new JSONObject("{\"production_endpoints\":{\"url\":\""
-                                   + endpointUrl + "\",\"config\":null},\"endpoint_type\":\""
-                                   + endpointUrl.getProtocol() + "\"}");
-        } catch (JSONException e) {
-            log.error("JSON construct error", e);
-            throw new APIManagerIntegrationTestException("JSON construct error", e);
-        }
-
-    }
-
-    @Override
-    public void setAction() {
+    @Override public void setAction() {
         setAction("addAPI");
     }
 
@@ -123,8 +121,7 @@ public class APIRequest extends AbstractRequest {
     /**
      * initialize method
      */
-    @Override
-    public void init() {
+    @Override public void init() {
 
         addParameter("name", name);
         addParameter("context", context);

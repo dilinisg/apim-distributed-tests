@@ -42,8 +42,7 @@ public class AuthenticateStub {
         Options option = client.getOptions();
         option.setManageSession(true);
         option.setTimeOutInMilliSeconds(soTimeout);
-        option.setProperty(org.apache.axis2.transport.http.HTTPConstants.COOKIE_STRING,
-                           sessionCookie);
+        option.setProperty(org.apache.axis2.transport.http.HTTPConstants.COOKIE_STRING, sessionCookie);
         if (log.isDebugEnabled()) {
             log.debug("AuthenticateStub : Stub created with session " + sessionCookie);
         }
@@ -56,12 +55,10 @@ public class AuthenticateStub {
         Options option = client.getOptions();
         option.setManageSession(true);
         option.setTimeOutInMilliSeconds(soTimeout);
-        option.setProperty(org.apache.axis2.transport.http.HTTPConstants.COOKIE_STRING,
-                           sessionCookie);
+        option.setProperty(org.apache.axis2.transport.http.HTTPConstants.COOKIE_STRING, sessionCookie);
 
         option.setTo(new EndpointReference(
-                backendURL + client.getServiceContext().getAxisService().getName()
-                        .replaceAll("[^a-zA-Z]", "")));
+                backendURL + client.getServiceContext().getAxisService().getName().replaceAll("[^a-zA-Z]", "")));
 
         if (log.isDebugEnabled()) {
             log.debug("AuthenticateStub : Stub created with session " + sessionCookie);

@@ -23,6 +23,7 @@ import org.apache.commons.logging.LogFactory;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.wso2.apim.exception.APIManagerIntegrationTestException;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -78,28 +79,24 @@ public class APICreationRequestBean extends AbstractRequest {
         resourceBeanList = new ArrayList<APIResourceBean>();
         resourceBeanList.add(new APIResourceBean("GET", "Application & Application User", "Unlimited", "/*"));
         try {
-            this.endpoint = new JSONObject("{\"production_endpoints\":{\"url\":\""
-                    + endpointUrl + "\",\"config\":null},\"endpoint_type\":\""
-                    + endpointUrl.getProtocol() + "\"}");
+            this.endpoint = new JSONObject(
+                    "{\"production_endpoints\":{\"url\":\"" + endpointUrl + "\",\"config\":null},\"endpoint_type\":\""
+                            + endpointUrl.getProtocol() + "\"}");
         } catch (JSONException e) {
             log.error("JSON construct error", e);
             throw new APIManagerIntegrationTestException(" Error When constructing the end point url JSON", e);
         }
     }
 
-    @Override
-    public void setAction() {
+    @Override public void setAction() {
         setAction("addAPI");
     }
 
-    @Override
-    public void setAction(String action) {
+    @Override public void setAction(String action) {
         super.setAction(action);
     }
 
-
-    @Override
-    public void init() {
+    @Override public void init() {
 
         addParameter("name", name);
         addParameter("context", context);

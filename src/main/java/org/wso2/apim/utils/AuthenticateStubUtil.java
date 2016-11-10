@@ -24,7 +24,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.utils.CarbonUtils;
 
-
 public class AuthenticateStubUtil {
 
     private static final Log log = LogFactory.getLog(AuthenticateStubUtil.class);

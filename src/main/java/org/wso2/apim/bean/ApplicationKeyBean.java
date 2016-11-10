@@ -27,7 +27,6 @@ public class ApplicationKeyBean {
     private String consumerKey;
     private String consumerSecret;
 
-
     public String getAccessToken() {
         return accessToken;
     }

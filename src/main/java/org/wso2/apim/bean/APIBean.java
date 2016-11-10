@@ -28,6 +28,7 @@ import java.util.Set;
 public class APIBean extends API {
     private String tags;
     private String availableTiers;
+
     public APIBean(APIIdentifier id) {
         super(id);
     }
@@ -39,7 +40,7 @@ public class APIBean extends API {
     public void setTags(String tags) {
         this.tags = tags;
         Set<String> stringSet = new HashSet<String>();
-        String[] strings =tags.split(",");
+        String[] strings = tags.split(",");
         Collections.addAll(stringSet, strings);
         super.addTags(stringSet);
     }
