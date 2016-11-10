@@ -26,6 +26,7 @@
         <classes>
             <!--<class name="org.wso2.apim.deployment.api.creation.APICreationInvocationTestCase"/>-->
             <class name="org.wso2.apim.deployment.api.creation.ApplicationCreationTestCase"/>
+            <class name="org.wso2.apim.deployment.api.creation.APIUpdateTestCase"/>
         </classes>
     </test>
 
